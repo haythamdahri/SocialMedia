@@ -10,19 +10,19 @@
 
         <!-- Page Wrapper Start -->
         <section class="page--wrapper pb--20">
-            <div class="container">
-                <div class="row  pt--40">
-				
-				<div class="col-md-8 pb--60">
+            <div class="container-fluid">
+                <div class="row  pt--40" style="padding: 40px 10%">
+
+				<div class="col-md-8 pb--60" >
 
                     <div class="row main--content" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);">
 				<button id="btcoverchange" class="btchangepic" data-toggle="modal" data-target="#squarespaceModal"><i class="fa fa-picture-o" aria-hidden="true"></i></button>
 				<!-- Cover Header Start -->
 				<div id="coverpic" class="cover--header pt--80 text-center" data-bg-img="{{ user.profil.photo_couverture.image.url|default:'/media/SocialMedia/default.jpg' }}" data-overlay="0.6" data-overlay-color="white" >
 		 
-					
 
-					<div class="container" style="width: auto;">
+
+					<div style="width: auto;">
 						<div class="cover--avatar online" data-overlay="0.3" data-overlay-color="primary">
 
 							<div class="photprofilcontainer">
@@ -43,16 +43,26 @@
 				<h2 class="h3 fw--600">{{ user.first_name }} {{ user.last_name }}</h2>
 						</div>
 
-						<div class="cover--user-desc fw--400 fs--18 fstyle--i text-darkest">
-							<p>{% if user.profil.entreprise is not None %}employé chez {{ user.profil.entreprise.nom }} située à {{ user.profil.entreprise.ville }}, {{ user.profil.entreprise.pays }}{% else %}Non embauché{% endif %}</p>
+						<div class="cover--user-desc fw--400 fs--18 fstyle--i text-darkest" style="margin-top: 0;">
+                            <p style="margin: 0;">
+							    {% if user.profil.poste is not None %}Poste Actuel: {{ user.profil.poste }}{% else %}Non Specialisé • {% endif %}{{ user.profil.ecole|default:'Ecole Non Mentionnée' }} <i class="fa fa-graduation-cap" aria-hidden="true"></i>
 
-							<p>{% if user.profil.pays is not None or user.profil.pays is not None %}{{ user.profil.ville }}, {{ user.profil.pays }}{% endif %}</p>
-						</div>
+                            </p>
+							<p style="margin: 0;">
+                                {% if user.profil.entreprise is not None %}employé chez {{ user.profil.entreprise.nom }} située à {{ user.profil.entreprise.ville }}, {{ user.profil.entreprise.pays }}{% else %}Non embauché{% endif %} <i class="fa fa-briefcase" aria-hidden="true"></i>
+
+                            </p>
+                            <p style="margin: 0;">
+							    {% if user.profil.pays is not None or user.profil.pays is not None %}{{ user.profil.ville }}, {{ user.profil.pays }}{% endif %} <i class="fa fa-globe" aria-hidden="true"></i>
+
+                            </p>
+
+                        </div>
 
 					</div>
 				</div>
 			<!-- Cover Header End -->
-				
+
 				</div>
 
                     <!-- Main Content Start -->
@@ -80,7 +90,7 @@
                 </div>
 
 					<!-- Main Sidebar Start -->
-                    <div class="main--sidebar col-md-4 pb--60" data-trigger="stickyScroll">
+                    <div class="col-md-4 main--sidebar pb--60" data-trigger="stickyScroll">
                         <!-- Widget Start -->
                         <div class="widget">
                             <h2 class="h4 fw--700 widget--title">Find A Buddy</h2>
@@ -252,12 +262,9 @@
                     </div>
                     <!-- Main Sidebar End -->
 
-
-
-
                 </div>
 {% block sideBar %}
-                    
+
 {% endblock %}
 
                 </div>

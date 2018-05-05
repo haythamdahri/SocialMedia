@@ -5035,10 +5035,7 @@ body.isScrolling #backToTop {
     background-color: #f7f8f9;
 }
 
-.header--navbar .navbar-collapse {
-    padding-left: 0;
-    padding-right: 0;
-}
+
 
 .header--nav-links {
     margin-left: -15px;
