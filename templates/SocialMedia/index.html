@@ -1,0 +1,35 @@
+{% extends "SocialMedia/base_socialmedia.html" %}
+{% load staticfiles %}
+{% block title %}Acceuil{% endblock %}
+{% block banner %}
+
+    <!-- Banner Section Start -->
+        <section class="banner--section" data-bg-img="{% static 'SocialMedia/img/ESPR.png' %}" data-overlay="0.7">
+            <div class="container">
+                <!-- Banner Content Start -->
+                <div class="banner--content pt--100 pb--100 text-center">
+                    <div class="title pb--10">
+                        <h1 class="h4 text-white">Reseau Social Metier</h1>
+                    </div>
+
+                    <div class="sub-title pb--10">
+                        <h2 class="h2 text-white">ESPR - Electronic Service Providers</h2>
+                    </div>
+
+                    <div class="action eq text-uppercase">
+                        <a href="{% url 'main_app:log_in' %}" class="btn btn-white"><i class="fa fa-sign-in" aria-hidden="true"></i> Connexion</a>
+                        <a href="{% url 'main_app:signup' %}" class="btn btn-primary"><i class="fa fa-sign-in" aria-hidden="true"></i> Creer Compte</a>
+                    </div>
+                </div>
+                <!-- Banner Content End -->
+            </div>
+        </section>
+        <!-- Banner Section End -->
+
+<style>
+    [data-overlay="0.7"]:before
+    {
+        background-color: #757575;
+    }
+</style>
+{% endblock %}

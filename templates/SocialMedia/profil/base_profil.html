@@ -1,0 +1,502 @@
+{% extends "SocialMedia/base_socialmedia.html" %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% load sekizai_tags %}
+{% block title %}{{ user.username }}{% endblock %}
+{% block content %}
+
+
+
+
+        <!-- Page Wrapper Start -->
+        <section class="page--wrapper pb--20">
+            <div class="container">
+                <div class="row  pt--40">
+				
+				<div class="col-md-8 pb--60">
+
+                    <div class="row main--content" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);">
+				<button id="btcoverchange" class="btchangepic" data-toggle="modal" data-target="#squarespaceModal"><i class="fa fa-picture-o" aria-hidden="true"></i></button>
+				<!-- Cover Header Start -->
+				<div id="coverpic" class="cover--header pt--80 text-center" data-bg-img="{{ user.profil.photo_couverture.image.url|default:'/media/SocialMedia/default.jpg' }}" data-overlay="0.6" data-overlay-color="white" >
+		 
+					
+
+					<div class="container" style="width: auto;">
+						<div class="cover--avatar online" data-overlay="0.3" data-overlay-color="primary">
+
+							<div class="photprofilcontainer">
+									<img id="profilpic" class="image " src="{{ user.profil.photo_profil.image.url|default:'/media/SocialMedia/default.jpg' }}" alt="">
+									<div class="middle">
+									<div class="text">
+										<a href="javascript:return false"  title="Photo Profil" class="btn-link" data-toggle="tooltip" data-placement="bottom">
+											<i id="btprofilchange" class="btchangepic profilpic fa fa-picture-o" data-toggle="modal" data-target="#squarespaceModalprofil" aria-hidden="true"></i>
+										</a>
+									</div>
+									</div>
+							</div>
+
+						</div>
+						<div class="cover--user-name">
+
+
+				<h2 class="h3 fw--600">{{ user.first_name }} {{ user.last_name }}</h2>
+						</div>
+
+						<div class="cover--user-desc fw--400 fs--18 fstyle--i text-darkest">
+							<p>{% if user.profil.entreprise is not None %}employé chez {{ user.profil.entreprise.nom }} située à {{ user.profil.entreprise.ville }}, {{ user.profil.entreprise.pays }}{% else %}Non embauché{% endif %}</p>
+
+							<p>{% if user.profil.pays is not None or user.profil.pays is not None %}{{ user.profil.ville }}, {{ user.profil.pays }}{% endif %}</p>
+						</div>
+
+					</div>
+				</div>
+			<!-- Cover Header End -->
+				
+				</div>
+
+                    <!-- Main Content Start -->
+                    <div class="row main--content pt--40" data-trigger="stickyScroll">
+                        <div class="main--content-inner drop--shadow">
+                            <!-- Content Nav Start -->
+                            <div class="content--nav pb--30">
+                                <ul class="nav ff--primary fs--14 fw--500 bg-lighter profil_links_menu">
+                                    <li><a href="">Activity</a></li>
+                                    <li class="active"><a href="{% url 'SocialMedia:profil' %}">Profil</a></li>
+                                    <li><a href="{% url 'SocialMedia:demandes' %}">Demandes <span id="nbdemandeBadge" class="badge">{{ nbdemandes }}</span></a></li>
+                                    <li><a href="{% url 'SocialMedia:groupes' %}">Groups</a></li>
+                                    <li><a href="{% url 'SocialMedia:mediaProfil' %}">Media</a></li>
+                                </ul>
+                            </div>
+                            <!-- Content Nav End -->
+{% block contentProfil %}
+
+
+{% endblock %}
+                </div>
+                    </div>
+                    <!-- Main Content End -->
+
+                </div>
+
+					<!-- Main Sidebar Start -->
+                    <div class="main--sidebar col-md-4 pb--60" data-trigger="stickyScroll">
+                        <!-- Widget Start -->
+                        <div class="widget">
+                            <h2 class="h4 fw--700 widget--title">Find A Buddy</h2>
+
+                            <!-- Buddy Finder Widget Start -->
+                            <div class="buddy-finder--widget">
+                                <form action="#">
+                                    <div class="row">
+                                        <div class="col-xs-6 col-xxs-12">
+                                            <div class="form-group">
+                                                <label>
+                                                    <span class="text-darker ff--primary fw--500">I Am</span>
+
+                                                    <select name="gender" class="form-control form-sm" data-trigger="selectmenu">
+                                                        <option value="male">Male</option>
+                                                        <option value="female">Female</option>
+                                                        <option value="other">Other</option>
+                                                    </select>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-6 col-xxs-12">
+                                            <div class="form-group">
+                                                <label>
+                                                    <span class="text-darker ff--primary fw--500">Looking For</span>
+
+                                                    <select name="lookingfor" class="form-control form-sm" data-trigger="selectmenu">
+                                                        <option value="female">Female</option>
+                                                        <option value="male">Male</option>
+                                                        <option value="other">Other</option>
+                                                    </select>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-6 col-xxs-12">
+                                            <div class="form-group">
+                                                <label>
+                                                    <span class="text-darker ff--primary fw--500">Age</span>
+
+                                                    <select name="age" class="form-control form-sm" data-trigger="selectmenu">
+                                                        <option value="18to25">18 to 25</option>
+                                                        <option value="25to30">25 to 30</option>
+                                                        <option value="30to35">30 to 35</option>
+                                                        <option value="35to40">35 to 40</option>
+                                                        <option value="40plus">40+</option>
+                                                    </select>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-6 col-xxs-12">
+                                            <div class="form-group">
+                                                <label>
+                                                    <span class="text-darker ff--primary fw--500">City</span>
+
+                                                    <select name="city" class="form-control form-sm" data-trigger="selectmenu">
+                                                        <option value="newyork">New York</option>
+                                                        <option value="California">California</option>
+                                                        <option value="Atlanta">Atlanta</option>
+                                                    </select>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                <label>
+                                                    <span class="text-darker ff--primary fw--500">Filter Country</span>
+
+                                                    <select name="city" class="form-control form-sm" data-trigger="selectmenu">
+                                                        <option value="unitedstates">United States</option>
+                                                        <option value="australia">Australia</option>
+                                                        <option value="turkey">Turkey</option>
+                                                        <option value="vietnam">Vietnam</option>
+                                                    </select>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-12">
+                                            <button type="submit" class="btn btn-primary">Search</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- Buddy Finder Widget End -->
+                        </div>
+                        <!-- Widget End -->
+
+                        <!-- Widget Start -->
+                        <div class="widget">
+                            <h2 class="h4 fw--700 widget--title">Notice</h2>
+
+                            <!-- Text Widget Start -->
+                            <div class="text--widget">
+                                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some  look even slightly believable.</p>
+                            </div>
+                            <!-- Text Widget End -->
+                        </div>
+                        <!-- Widget End -->
+
+                        <!-- Widget Start -->
+                        <div class="widget">
+                            <h2 class="h4 fw--700 widget--title">Forums</h2>
+
+                            <!-- Links Widget Start -->
+                            <div class="links--widget">
+                                <ul class="nav">
+                                    <li><a href="sub-forums.html">User Interface Design<span>(12)</span></a></li>
+                                    <li><a href="sub-forums.html">Front-End Engineering<span>(07)</span></a></li>
+                                    <li><a href="sub-forums.html">Web Development<span>(37)</span></a></li>
+                                    <li><a href="sub-forums.html">Social Media Marketing<span>(13)</span></a></li>
+                                    <li><a href="sub-forums.html">Content Marketing<span>(28)</span></a></li>
+                                </ul>
+                            </div>
+                            <!-- Links Widget End -->
+                        </div>
+                        <!-- Widget End -->
+
+                        <!-- Widget Start -->
+                        <div class="widget">
+                            <h2 class="h4 fw--700 widget--title">Archives</h2>
+
+                            <!-- Nav Widget Start -->
+                            <div class="nav--widget">
+                                <ul class="nav">
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-calendar-o"></i>
+                                            <span class="text">Jan - July 2017</span>
+                                            <span class="count">(86)</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-calendar-o"></i>
+                                            <span class="text">Jan - Dce 2016</span>
+                                            <span class="count">(328)</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-calendar-o"></i>
+                                            <span class="text">Jan - Dec 2015</span>
+                                            <span class="count">(427)</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- Nav Widget End -->
+                        </div>
+                        <!-- Widget End -->
+
+                        <!-- Widget Start -->
+                        <div class="widget">
+                            <h2 class="h4 fw--700 widget--title">Advertisements</h2>
+
+                            <!-- Ad Widget Start -->
+                            <div class="ad--widget">
+                                <a href="#">
+                                    <img src="{% static 'SocialMedia/img/widgets-img/ad.jpg' %}" alt="" class="center-block">
+                                </a>
+                            </div>
+                            <!-- Ad Widget End -->
+                        </div>
+                        <!-- Widget End -->
+                    </div>
+                    <!-- Main Sidebar End -->
+
+
+
+
+                </div>
+{% block sideBar %}
+                    
+{% endblock %}
+
+                </div>
+            </div>
+        </section>
+        <!-- Page Wrapper End -->
+
+{% block modals %}
+        <!-- line modal for cover -->
+    <div id="#formcover">
+<div class="modal fade" id="squarespaceModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+			<h3 class="modal-title" id="lineModalLabel">Choisir Votre Image</h3>
+		</div>
+		<div class="modal-body">
+
+            <!-- content goes here -->
+              <form method="post" onsubmit="return " id="photoform" enctype="multipart/form-data">
+                  {% csrf_token %}
+                      <div class="form-group">
+                          <div class="input-group">
+                              <span class="input-group-btn">
+                                  <span class="btn btn-default btn-file" style="font-weight: bold;font-size: 22px;">
+                                      Choisir Une Image…{% render_field photoform.image accept='image/*' class="form-control" style="cursor: pointer" id="imgInp" %}
+                                  </span>
+                              </span>
+                                  <input type="text" class="form-control" readonly>
+                          </div>
+                      </div>
+                      <div class="form-group" id="photo">
+                        <img id='img-upload' />
+                      </div>
+                  <div class="form-group text-center">
+                      <button class="mybt" style="background-color:#1ea1f2; border: none;border-radius:50px;color:#ffffff;display:inline-block;line-height:44px;text-align:center;text-decoration:none;width:250px;-webkit-text-size-adjust:none;" type="submit"><i class="fa fa-check-square-o" aria-hidden="true"></i> Changer Photo</button>
+                  </div>
+              </form>
+                    <div class="panel-group uploadprogress hidden">
+                        <h4 class="modal-title">Uploading...</h4>
+                            <div class="progress">
+                              <div class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
+                            </div>
+                    </div>
+
+		</div>
+		<div class="modal-footer">
+			<div class="btn-group btn-group-justified" role="group" aria-label="group button">
+				<div class="btn-group" role="group">
+					<button type="button" class="btn btn-default btcancelupload" data-dismiss="modal"  role="button"><i class="fa fa-times" aria-hidden="true"></i> Annuler</button>
+				</div>
+			</div>
+		</div>
+	</div>
+  </div>
+</div>
+    </div>
+    <!-- line modal for cover -->
+    <div id="#formprofil">
+<div class="modal fade" id="squarespaceModalprofil" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+			<h3 class="modal-title" id="lineModalLabel">Choisir Votre Image De Profil</h3>
+		</div>
+		<div class="modal-body">
+
+            <!-- content goes here -->
+              <form method="post" onsubmit="return " id="photoprofilform" enctype="multipart/form-data">
+                  {% csrf_token %}
+                      <div class="form-group">
+                          <div class="input-group">
+                              <span class="input-group-btn">
+                                  <span class="btn btn-default btn-file1" style="font-weight: bold;font-size: 22px;cursor: pointer;">
+                                      Choisir Votre Image De Profil…{% render_field photoform.image class="form-control" accept='image/*' id="imgInp1" %}
+                                  </span>
+                              </span>
+                                  <input type="text" class="form-control" readonly>
+                          </div>
+                      </div>
+                      <div class="form-group" id="photo1">
+                        <img id='img-upload1' />
+                      </div>
+                  <div class="form-group text-center">
+                      <button class="mybt" style="background-color:#1ea1f2; border: none;border-radius:50px;color:#ffffff;display:inline-block;line-height:44px;text-align:center;text-decoration:none;width:250px;-webkit-text-size-adjust:none;" type="submit"><i class="fa fa-check-square-o" aria-hidden="true"></i> Changer Photo</button>
+                  </div>
+              </form>
+                    <div class="panel-group uploadprogress hidden uploadp">
+                        <h4 class="modal-title">Uploading...</h4>
+                            <div class="progress">
+                              <div class="progress-bar prog" role="progressbar" style="width: 0%;">0%</div>
+                            </div>
+                    </div>
+
+		</div>
+		<div class="modal-footer">
+			<div class="btn-group btn-group-justified" role="group" aria-label="group button">
+				<div class="btn-group" role="group">
+					<button type="button" class="btn btn-default btcancelupload btc" data-dismiss="modal"  role="button"><i class="fa fa-times" aria-hidden="true"></i> Annuler</button>
+				</div>
+			</div>
+		</div>
+	</div>
+  </div>
+</div>
+    </div>
+{% endblock %}
+
+{% endblock %}
+
+
+
+
+{% block scripts %}
+    {{ block.super }}
+    <script>
+
+$("#photoform").on( "submit", function(event) {
+     console.log($('#photoprofilform .input-group').find(':text').val());
+    if( $('#photoform .input-group').find(':text').val().length == 0 ){
+        swal({
+          type: 'error',
+          title: 'Aucune Photo Selectionnée',
+          text: 'Veuillez Selectionner Une Photo',
+          type: 'error'
+        });
+        return false;
+    }else if( $('#photoform .input-group').find(':text').val().length > 100 )
+    {
+        swal({
+          type: 'error',
+          title: 'Nombre De Caractere Depasse la limite',
+          text: 'Veuillez Changer Le Nom de la photo Ou Selectionner Une Autre'
+        });
+        return false;
+    }
+	event.preventDefault();
+    $('.modal-footer').slideToggle(1500);
+	setTimeout(function(){
+       $(".uploadprogress").removeClass('hidden');
+    }, 1000);
+    var form_data = new FormData($(this)[0]);
+    $.ajax({
+        xhr: function () {
+        var xhr = new window.XMLHttpRequest();
+        xhr.upload.addEventListener("progress", function (e) {
+            var progress = parseInt(e.loaded / e.total * 100, 10);
+            var strProgress = progress + "%";
+            var strProgress = progress + "%";
+            $(".progress-bar").css({"width": strProgress});
+            $(".progress-bar").text(strProgress);
+        }, false);
+        xhr.addEventListener("progress", function (evt) {
+
+        }, false);
+        return xhr;
+    },
+        url: '{% url "SocialMedia:changephotocouverture" %}',
+        type: $(this).attr('method'),
+        processData: false,
+        contentType: false,
+        data : form_data,
+        success: function(data) {
+            $("#squarespaceModal").modal("hide");
+            swal("Photo De Couverture A Ete Changée Avec Succé", "{{ user.username }}", "success");
+            $("#coverpic").css("background-image", "url("+data.url+")");
+        },
+        error: function() { },
+        stop: function (e) {  /* 3. WHEN THE UPLOADING PROCESS FINALIZE, HIDE THE MODAL */
+          $("#squarespaceModal").modal("hide");
+            swal("Veuiller Verifier Votre Connexion Reseau Puis Ressayer", "Erreur Fatale", "error");
+        }
+    });
+
+});
+
+$("#photoprofilform").on( "submit", function(event) {
+    if( $('#photoprofilform .input-group').find(':text').val().length == 0 ){
+        swal({
+          type: 'error',
+          title: 'Aucune Photo Selectionnée',
+          text: 'Veuillez Selectionner Une Photo'
+        });
+        return false;
+    }else if( $('#photoprofilform .input-group').find(':text').val().length > 100 )
+    {
+        swal({
+          type: 'error',
+          title: 'Nombre De Caractere Depasse la limite',
+          text: 'Veuillez Changer Le Nom de la photo Ou Selectionner Une Autre'
+        });
+        return false;
+    }
+	event.preventDefault();
+    $('.modal-footer').slideToggle(1500);
+	setTimeout(function(){
+       $(".uploadp").removeClass('hidden');
+    }, 1000);
+    var form_data = new FormData($(this)[0]);
+    $.ajax({
+        xhr: function () {
+        var xhr = new window.XMLHttpRequest();
+        xhr.upload.addEventListener("progress", function (e) {
+            var progress = parseInt(e.loaded / e.total * 100, 10);
+            var strProgress = progress + "%";
+            var strProgress = progress + "%";
+            $(".prog").css({"width": strProgress});
+            $(".prog").text(strProgress);
+        }, false);
+        xhr.addEventListener("progress", function (evt) {
+
+        }, false);
+        return xhr;
+    },
+        url: '{% url "SocialMedia:changephotoprofil" %}',
+        type: $(this).attr('method'),
+        processData: false,
+        contentType: false,
+        data : form_data,
+        success: function(data) {
+            $("#squarespaceModalprofil").modal("hide");
+            swal("Photo De Profil A Ete Changée Avec Succé", "{{ user.username }}", "success");
+            $("#profilpic").attr("src", data.url);
+        },
+        error: function() { },
+        stop: function (e) {  /* 3. WHEN THE UPLOADING PROCESS FINALIZE, HIDE THE MODAL */
+          $("#squarespaceModalprofil").modal("hide");
+            swal("Veuiller Verifier Votre Connexion Reseau Puis Ressayer", "Erreur Fatale", "error");
+        }
+    });
+
+});
+
+    </script>
+
+{% endblock %}
+
+
+
+

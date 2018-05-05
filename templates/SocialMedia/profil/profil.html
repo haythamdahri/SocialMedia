@@ -1,0 +1,153 @@
+{% extends "SocialMedia/profil/base_profil.html" %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% load sekizai_tags %}
+{% block title %}{{ user.username }}{% endblock %}
+
+{% block contentProfil %}
+                            <!-- Profile Details Start -->
+                            <div class="profile--details fs--14">
+                                <!-- Profile Item Start -->
+                                <div class="profile--item">
+                                    <div class="profile--heading">
+                                        <h3 class="h4 fw--700">
+                                            <span class="mr--4">A Propos</span>
+                                            <i class="ml--10 text-primary fa fa-caret-right"></i>
+                                        </h3>
+                                    </div>
+
+                                    <div class="profile--info">
+                                        <table class="table">
+                                            <tbody style="float:left;">
+                                            <tr>
+                                                <th class="fw--700 text-darkest">Linked Accounts</th>
+                                                <td>
+                                                    <a href="{{ user.profil.SocialMedia }}" target="_blank" class="btn-link"><i style="font-size:20px;color:#3b5999" class="fa fa-SocialMedia-square" aria-hidden="true"></i></a>
+                                                    <a href="{{ user.profil.youtube }}" target="_blank" class="btn-link"><i style="font-size:20px;color:#cd201f" class="fa fa-youtube-square" aria-hidden="true"></i></a>
+                                                    <a href="{{ user.profil.instagram }}" target="_blank" class="btn-link"><i style="font-size:20px;color:#e4405f" class="fa fa-instagram" aria-hidden="true"></i></a>
+                                                    <a href="{{ user.profil.linkedin }}" target="_blank" class="btn-link"><i style="font-size:20px;color:#0077B5" class="fa fa-linkedin-square" aria-hidden="true"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="fw--700 text-darkest">Nom Complet</th>
+                                                <td><a href="#" class="btn-link">{{ user.first_name }}</a></td>
+                                            </tr>
+                                            <tr>
+                                                <th class="fw--700 text-darkest">Entreprise</th>
+                                                <td><a href="https://www.google.com/search?q={{ user.profil.entreprise.nom }}" target="_blank" class="btn-link">{{ user.profil.entreprise.nom }}</a></td>
+                                            </tr>
+                                            <tr>
+                                                <th class="fw--700 text-darkest">Date De Naissance</th>
+                                                <td>{{ user.profil.date_naissance }}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- Profile Item End -->
+
+                                <!-- Profile Item Start -->
+                                <div class="profile--item">
+                                    <div class="profile--heading">
+                                        <h3 class="h4 fw--700">
+                                            <span class="mr--4">Biography</span>
+                                            <i class="ml--10 text-primary fa fa-caret-right"></i>
+                                        </h3>
+                                    </div>
+
+                                    <div class="profile--info">
+                                        <p>Hello ! I’m <a href="{% url 'SocialMedia:profil' %}">{{ user.first_name }} {{ user.last_name }}</a>. {{ user.profil.biography }}</p>
+                                    </div>
+                                </div>
+                                <!-- Profile Item End -->
+
+                                <!-- Profile Item Start -->
+                                <div class="profile--item">
+                                    <div class="profile--heading">
+                                        <h3 class="h4 fw--700">
+                                            <span class="mr--4">Work Experience</span>
+                                            <i class="ml--10 text-primary fa fa-caret-right"></i>
+                                        </h3>
+                                    </div>
+
+                                    <div class="profile--info">
+                                        <dl>
+                                            <dt>
+                                                <p class="h6 fw--700 text-darkest">Graphic Designer 2010 - 2012</p>
+                                                <p><small class="fw--400 fs--12 text-darker">Graphicriver.net at Sydney</small></p>
+                                            </dt>
+                                            <dd>
+                                                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour which don't look even slightly believable.</p>
+                                            </dd>
+
+                                            <dt>
+                                                <p class="h6 fw--700 text-darkest">Font-End Developer 2012 - 2014</p>
+                                                <p><small class="fw--400 fs--12 text-darker">Themeforest.net at Australia</small></p>
+                                            </dt>
+                                            <dd>
+                                                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour which don't look even slightly believable.</p>
+                                            </dd>
+
+                                            <dt>
+                                                <p class="h6 fw--700 text-darkest">Web Developer 2014 - Still Now</p>
+                                                <p><small class="fw--400 fs--12 text-darker">Codecanyon.net at Sydney</small></p>
+                                            </dt>
+                                            <dd>
+                                                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour which don't look even slightly believable.</p>
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                                <!-- Profile Item End -->
+
+                                <!-- Profile Item Start -->
+                                <div class="profile--item">
+                                    <div class="profile--heading">
+                                        <h3 class="h4 fw--700">
+                                            <span class="mr--4">Contact</span>
+                                            <i class="ml--10 text-primary fa fa-caret-right"></i>
+                                        </h3>
+                                    </div>
+
+                                    <div class="profile--info">
+                                        <table class="table">
+                                            <tr>
+                                                <th class="fw--700 text-darkest">Phone</th>
+                                                <td><a href="tel:+16105598246">{{ user.profil.tel }}</a></td>
+                                            </tr>
+                                            <tr>
+                                                <th class="fw--700 text-darkest">E-mail</th>
+                                                <td><a href="#"><span class="__cf_email__" data-cfemail="4622232b2906233e272b362a236825292b">{% if user.email is not None %}{{ user.email }}{% else %}PROTECTED{% endif %}</span></a></td>
+                                            </tr>
+                                            <tr>
+                                                <th class="fw--700 text-darkest">Website</th>
+                                                <td><a href="{{ user.profil.website }}" target="_blank">{{ user.profil.website }}</a></td>
+                                            </tr>
+                                            <tr>
+                                                <th class="fw--700 text-darkest">Address</th>
+                                                <td>{{ user.profil.address|default:"Non Rempli" }}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- Profile Item End -->
+                            </div>
+
+
+                            <!-- Profile Details End -->
+
+{% endblock %}
+
+
+
+
+
+{% block scripts %}
+
+    {{ block.super }}
+
+{% endblock %}
+
+
+
+

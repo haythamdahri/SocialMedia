@@ -1,0 +1,575 @@
+{% extends 'main_app/base_main.html' %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+
+
+{% block stylesheets %}
+    {{ block.super }}
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- ==== Document Title ==== -->
+    <title>{% block title %}Réseau social - {% endblock title %}</title>
+
+    <!-- ==== Document Meta ==== -->
+    <meta name="author" content="ThemeLooks">
+    <meta name="description" content="Multipurpose Facebook Network HTML5 Template">
+    <meta name="keywords"
+          content="Facebook media, Facebook network, forum, shop, bootstrap, html5, css3, template, responsive, retina ready">
+
+    <!-- ==== Favicon ==== -->
+    <link rel="icon" href="{% static 'SocialMedia/favicon.png' %}" type="image/png">
+
+    <!-- ==== Google Font ==== -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Raleway:400,500,600,700%7CRoboto:300,400,400i,500,700">
+
+    <!-- ==== Plugins Bundle ==== -->
+    <link rel="stylesheet" href="{% static 'SocialMedia/css/plugins.min.css' %}">
+
+    <!-- ==== Main Stylesheet ==== -->
+    <link rel="stylesheet" href="{% static 'SocialMedia/style.css' %}">
+
+    <!-- ==== Responsive Stylesheet ==== -->
+    <link rel="stylesheet" href="{% static 'SocialMedia/css/responsive-style.css' %}">
+
+    <!-- ==== Color Scheme Stylesheet ==== -->
+    <link rel="stylesheet" href="{% static 'SocialMedia/css/colors/color-1.css' %}" id="changeColorScheme">
+
+    <!-- ==== Custom Stylesheet ==== -->
+    <link rel="stylesheet" href="{% static 'SocialMedia/css/custom.css' %}">
+
+
+    <!-- ==== HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries ==== -->
+    <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+
+{% endblock stylesheets %}
+
+
+{% block menu %}
+        <!-- Wrapper Start -->
+        <div class="wrapper">
+            <!-- Header Section Start -->
+            <header class="header--section style--1">
+    <!-- Header Navbar Start -->
+    <div class="header--navbar navbar bg-black" data-trigger="sticky">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle style--1 collapsed" data-toggle="collapse"
+                        data-target="#headerNav">
+                    <span class="sr-only">Toggle Navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <!-- Header Navbar Logo Start -->
+                <div class="header--navbar-logo navbar-brand">
+                    <a href="/reseausocial/home/">
+                        <h2 class="menu-title">ESPR</h2>
+                    </a>
+                </div>
+                <!-- Header Navbar Logo End -->
+            </div>
+
+            {% if user.is_authenticated %}
+
+                <div id="headerNav" class="navbar-collapse collapse float--right navbar-menu-custom">
+
+
+                    <!-- Header Nav Links Start -->
+                    <ul class="header--nav-links style--1 nav ff--primary">
+
+                        <li class="li-search-menu text-center-menu">
+                            <div class="product--quantity">
+                                <div class="input-group input-group-menu">
+                                    <input type="text" name="quantity">
+
+                                    <div class="input-group-addon text-default search-icon-menu">
+                                        <i class="fa fa-search"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+
+
+                        {% if user.is_authenticated %}
+                            <li>
+                                <a href="{% url 'SocialMedia:profil' %}" class="btn-link text-center-menu">
+                                    <i class="fa mr--8 fa-user-o"></i>
+                                    <span>{{ user.first_name }} {{ user.last_name }}</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle text-center-menu" data-toggle="dropdown">
+                                <span>Amis</span>
+                            </a>
+
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle text-center-menu" data-toggle="dropdown">
+                                <span>Groupes</span>
+                                <i class="fa fa-caret-down"></i>
+                            </a>
+
+                            <ul class="dropdown-menu">
+                                <li><a href="forums.html">Créer un groupe</a></li>
+                                <li><a href="sub-forums.html">Voir tous les groupes</a></li>
+                                <li><a href="topics.html">Les groupes dont je fais parti</a></li>
+                            </ul>
+                        </li>
+
+
+                        <li class="dropdown ">
+                            <a href="cart.html" title="Demandes d'amitié" class="text-center-menu">
+                                <i class="fa fa-users"></i>
+                                <span class="badge">1</span>
+                            </a>
+
+                        </li>
+
+                        <li class="dropdown">
+                            <a href="cart.html" title="Messages" class="text-center-menu">
+                                <i class="fa fa-comment"></i>
+                                <span class="badge">0</span>
+                            </a>
+
+                        </li>
+
+                        <li class="dropdown">
+                            <a href="cart.html" title="Notifications" class="text-center-menu">
+                                <i class="fa fa-bell"></i>
+                                <span class="badge">3</span>
+                            </a>
+
+                        </li>
+
+                        <li class="dropdown">
+                            <a href="cart.html" title="Notifications" class="text-center-menu">
+                                <i class="fa fa-cog"></i>
+                                <i class="fa fa-sort-down"></i>
+                            </a>
+
+                             <ul class="dropdown-menu">
+                                <li><a href="forums.html">Modifier mes infos</a></li>
+                                <li><a href="sub-forums.html">...</a></li>
+                                <li><a href="topics.html">...</a></li>
+                            </ul>
+
+                        </li>
+
+
+                    </ul>
+                    <!-- Header Nav Links End -->
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <!-- Header Navbar End -->
+    </header>
+            <!-- Header Section End -->
+
+
+
+
+{% endblock menu %}
+
+{% block banner %}
+{% endblock banner %}
+
+
+{% block content %}
+{% endblock content %}
+
+{% block footer %}
+    {{ block.super }}
+        <!-- Footer Section Start -->
+        <footer class="footer--section">
+            <!-- Footer Widgets Start -->
+            <div class="footer--widgets pt--70 pb--20 bg-lightdark" data-bg-img="{% static 'SocialMedia/img/footer-img/footer-widgets-bg.png' %}">
+                <div class="container">
+                    <div class="row AdjustRow">
+                        <div class="col-md-3 col-xs-6 col-xxs-12 pb--60">
+                            <!-- Widget Start -->
+                            <div class="widget">
+                                <h2 class="h4 fw--700 widget--title">About Us</h2>
+
+                                <!-- Text Widget Start -->
+                                <div class="text--widget">
+                                    <p>Ipsum is simply dummy text of the printing indusLorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+
+                                    <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+                                </div>
+                                <!-- Text Widget End -->
+                            </div>
+                            <!-- Widget End -->
+
+                            <!-- Widget Start -->
+                            <div class="widget">
+                                <h2 class="h4 fw--700 widget--title">Subscribe To Our Newsletter</h2>
+
+                                <!-- Newsletter Widget Start -->
+                                <div class="newsletter--widget style--1" data-form="validate">
+                                    <form action="https://themelooks.us13.list-manage.com/subscribe/post?u=79f0b132ec25ee223bb41835f&amp;id=f4e0e93d1d" method="post" name="mc-embedded-subscribe-form" target="_blank">
+                                        <div class="input-group">
+                                            <input type="email" name="EMAIL" placeholder="Enter your emil address" class="form-control" autocomplete="off" required>
+
+                                            <div class="input-group-btn">
+                                                <button type="submit" class="btn-link"><i class="fa fa-send-o"></i></button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- Newsletter Widget End -->
+                            </div>
+                            <!-- Widget End -->
+                        </div>
+
+                        <div class="col-md-3 col-xs-6 col-xxs-12 pb--60">
+                            <!-- Widget Start -->
+                            <div class="widget">
+                                <h2 class="h4 fw--700 widget--title">Recent Post</h2>
+
+                                <!-- Recent Posts Widget Start -->
+                                <div class="recent-posts--widget">
+                                    <ul class="nav">
+                                        <li>
+                                            <p class="date fw--300">
+                                                <a href="#"><i class="fa mr--8 fa-file-text-o"></i>19 Jan 2017</a>
+                                            </p>
+                                            <p class="title fw--700">
+                                                <a href="blog-details.html">I look at you and see the rest of my life in front</a>
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <p class="date fw--300">
+                                                <a href="#"><i class="fa mr--8 fa-file-text-o"></i>19 Jan 2017</a>
+                                            </p>
+                                            <p class="title fw--700">
+                                                <a href="blog-details.html">If I know what love is, it is because of you</a>
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <p class="date fw--300">
+                                                <a href="#"><i class="fa mr--8 fa-file-text-o"></i>19 Jan 2017</a>
+                                            </p>
+                                            <p class="title fw--700">
+                                                <a href="blog-details.html">At the touch of love everyone becomes a poet</a>
+                                            </p>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- Recent Posts Widget End -->
+                            </div>
+                            <!-- Widget End -->
+
+                            <!-- Widget Start -->
+                            <div class="widget">
+                                <h2 class="h4 fw--700 widget--title">Tags</h2>
+
+                                <!-- Tags Widget Start -->
+                                <div class="tags--widget">
+                                    <ul class="nav">
+                                        <li><a href="#">BuddyPress</a></li>
+                                        <li><a href="#">HTML</a></li>
+                                        <li><a href="#">Music</a></li>
+                                        <li><a href="#">Technology</a></li>
+                                        <li><a href="#">Movies</a></li>
+                                        <li><a href="#">Photography</a></li>
+                                        <li><a href="#">WordPress</a></li>
+                                    </ul>
+                                </div>
+                                <!-- Tags Widget End -->
+                            </div>
+                            <!-- Widget End -->
+                        </div>
+
+                        <div class="col-md-3 col-xs-6 col-xxs-12 pb--60">
+                            <!-- Widget Start -->
+                            <div class="widget">
+                                <h2 class="h4 fw--700 widget--title">Some of Catagories</h2>
+
+                                <!-- Nav Widget Start -->
+                                <div class="nav--widget">
+                                    <ul class="nav">
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-folder-o"></i>
+                                                <span class="text">SocialMedia Media</span>
+                                                <span class="count">(26)</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-folder-o"></i>
+                                                <span class="text">Business Studies</span>
+                                                <span class="count">(06)</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-folder-o"></i>
+                                                <span class="text">Technology</span>
+                                                <span class="count">(34)</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- Nav Widget End -->
+                            </div>
+                            <!-- Widget End -->
+
+                            <!-- Widget Start -->
+                            <div class="widget">
+                                <h2 class="h4 fw--700 widget--title">From Archives</h2>
+
+                                <!-- Nav Widget Start -->
+                                <div class="nav--widget">
+                                    <ul class="nav">
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-calendar-o"></i>
+                                                <span class="text">Jan - July 2017</span>
+                                                <span class="count">(86)</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-calendar-o"></i>
+                                                <span class="text">Jan - Dce 2016</span>
+                                                <span class="count">(328)</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-calendar-o"></i>
+                                                <span class="text">Jan - Dec 2015</span>
+                                                <span class="count">(427)</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- Nav Widget End -->
+                            </div>
+                            <!-- Widget End -->
+                        </div>
+
+                        <div class="col-md-3 col-xs-6 col-xxs-12 pb--60">
+                            <!-- Widget Start -->
+                            <div class="widget">
+                                <h2 class="h4 fw--700 widget--title">Forums</h2>
+
+                                <!-- Links Widget Start -->
+                                <div class="links--widget">
+                                    <ul class="nav">
+                                        <li><a href="sub-forums.html">User Interface Design</a></li>
+                                        <li><a href="sub-forums.html">Front-End Engineering</a></li>
+                                        <li><a href="sub-forums.html">Web Development</a></li>
+                                        <li><a href="sub-forums.html">SocialMedia Media Marketing</a></li>
+                                        <li><a href="sub-forums.html">Content Marketing</a></li>
+                                    </ul>
+                                </div>
+                                <!-- Links Widget End -->
+                            </div>
+                            <!-- Widget End -->
+
+                            <!-- Widget Start -->
+                            <div class="widget">
+                                <h2 class="h4 fw--700 widget--title">Useful Links</h2>
+
+                                <!-- Links Widget Start -->
+                                <div class="links--widget">
+                                    <ul class="nav">
+                                        <li><a href="#">Register</a></li>
+                                        <li><a href="#">Login</a></li>
+                                        <li><a href="#">Membership Levels</a></li>
+                                        <li><a href="#">Shop</a></li>
+                                        <li><a href="#">Contact</a></li>
+                                    </ul>
+                                </div>
+                                <!-- Links Widget End -->
+                            </div>
+                            <!-- Widget End -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer Widgets End -->
+
+            <!-- Footer Extra Start -->
+            <div class="footer--extra bg-darker pt--30 pb--40 text-center">
+                <div class="container">
+                    <!-- Widget Start -->
+                    <div class="widget">
+                        <h2 class="h4 fw--700 widget--title">Recent Active Members</h2>
+
+                        <!-- Recent Active Members Widget Start -->
+                        <div class="recent-active-members--widget style--2">
+                            <div class="owl-carousel" data-owl-items="12" data-owl-nav="true" data-owl-speed="1200" data-owl-responsive='{"0": {"items": "3"}, "481": {"items": "6"}, "768": {"items": "8"}, "992": {"items": "12"}}'>
+                                <div class="img">
+                                    <a href="member-activity-personal.html"><img src="{% static 'SocialMedia/img/widgets-img/recent-active-members/01.jpg' %}" alt=""></a>
+                                </div>
+
+                                <div class="img">
+                                    <a href="member-activity-personal.html"><img src="{% static 'SocialMedia/img/widgets-img/recent-active-members/02.jpg' %}" alt=""></a>
+                                </div>
+
+                                <div class="img">
+                                    <a href="member-activity-personal.html"><img src="{% static 'SocialMedia/img/widgets-img/recent-active-members/03.jpg' %}" alt=""></a>
+                                </div>
+
+                                <div class="img">
+                                    <a href="member-activity-personal.html"><img src="{% static 'SocialMedia/img/widgets-img/recent-active-members/04.jpg' %}" alt=""></a>
+                                </div>
+
+                                <div class="img">
+                                    <a href="member-activity-personal.html"><img src="{% static 'SocialMedia/img/widgets-img/recent-active-members/05.jpg' %}" alt=""></a>
+                                </div>
+
+                                <div class="img">
+                                    <a href="member-activity-personal.html"><img src="{% static 'SocialMedia/img/widgets-img/recent-active-members/06.jpg' %}" alt=""></a>
+                                </div>
+
+                                <div class="img">
+                                    <a href="member-activity-personal.html"><img src="{% static 'SocialMedia/img/widgets-img/recent-active-members/07.jpg' %}" alt=""></a>
+                                </div>
+
+                                <div class="img">
+                                    <a href="member-activity-personal.html"><img src="{% static 'SocialMedia/img/widgets-img/recent-active-members/08.jpg' %}" alt=""></a>
+                                </div>
+
+                                <div class="img">
+                                    <a href="member-activity-personal.html"><img src="{% static 'SocialMedia/img/widgets-img/recent-active-members/09.jpg' %}" alt=""></a>
+                                </div>
+
+                                <div class="img">
+                                    <a href="member-activity-personal.html"><img src="{% static 'SocialMedia/img/widgets-img/recent-active-members/10.jpg' %}" alt=""></a>
+                                </div>
+
+                                <div class="img">
+                                    <a href="member-activity-personal.html"><img src="{% static 'SocialMedia/img/widgets-img/recent-active-members/11.jpg' %}" alt=""></a>
+                                </div>
+
+                                <div class="img">
+                                    <a href="member-activity-personal.html"><img src="{% static 'SocialMedia/img/widgets-img/recent-active-members/12.jpg' %}" alt=""></a>
+                                </div>
+
+                                <div class="img">
+                                    <a href="member-activity-personal.html"><img src="{% static 'SocialMedia/img/widgets-img/recent-active-members/13.jpg' %}" alt=""></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Recent Active Members Widget End -->
+                    </div>
+                    <!-- Widget End -->
+                </div>
+            </div>
+            <!-- Footer Extra End -->
+
+            <!-- Footer Copyright Start -->
+            <div class="footer--copyright pt--30 pb--30 bg-darkest">
+                <div class="container">
+                    <div class="text fw--500 fs--14 text-center">
+                        <p>Copyright &copy; Soci<span>fly</span>. All Rights Reserved.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer Copyright End -->
+        </footer>
+        <!-- Footer Section End -->
+</div>
+    <!-- Wrapper End -->
+
+    <!-- Back To Top Button Start -->
+    <div id="backToTop">
+        <a href="#" class="btn"><i class="fa fa-caret-up"></i></a>
+    </div>
+    <!-- Back To Top Button End -->
+
+{% endblock %}
+
+
+
+{% block scripts %}
+    {{ block.super }}
+
+
+    <script>
+        $("#linkReseauSocial").addClass("active");
+        $("#linkReseauSocial1").addClass("active");
+        $("#linkReseauSocial2").addClass("active");
+
+        $("#linkAcceuil").removeClass("active");
+        $("#linkQA").removeClass("active");
+        $("#linkAcceuil").removeClass("active");
+        $("#linkMarketPlace").removeClass("active");
+        $("#linkELearning").removeClass("active");
+        $("#linkAppelsOffres").removeClass("active");
+        $("#linkAppelsOffres1").removeClass("active");
+        $("#linkMarketPlace1").removeClass("active");
+        $("#linkELearning1").removeClass("active");
+        $("#linkAppelsOffres2").removeClass("active");
+    </script>
+
+
+    <!-- ==== Plugins Bundle ==== -->
+    <script src="{% static 'SocialMedia/js/plugins.min.js' %}"></script>
+
+
+
+    <!-- ==== Main Script ==== -->
+    <script src="{% static 'SocialMedia/js/main.js' %}"></script>
+
+
+    <!-- ==== SweetJs Script ==== -->
+    <script src="{% static 'SocialMedia/js/jquery.sweet-modal.min.js' %}"></script>
+
+    <!-- ==== SweetJs Script ==== -->
+    <script src="{% static 'SocialMedia/js/sweetalert2.js' %}"></script>
+
+    <!-- Optional: include a polyfill for ES6 Promises for IE11 and Android browser -->
+    <script src="https://unpkg.com/promise-polyfill@7.1.0/dist/promise.min.js"></script>
+
+    <!-- ==== Custom Script ==== -->
+    <script src="{% static 'SocialMedia/js/custom.js' %}"></script>
+
+    <script>
+
+    {% if is_first %}
+
+       swal({
+      title: 'Bienvenue Chez nous, vous etes connecté pour la premiere fois, voulez-vous remplir maintenant votre profil??',
+      text: "Si Vous desirez modifier le profil plutard cliquer sur non",
+      type: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Oui, Modifier Mon Profil!',
+      cancelButtonText: 'Non',
+    }).then((result) => {
+      if (result.value) {
+          swal({
+              text: 'Vous Serez Redirigé!',
+              title: 'Merci de nous rejoindre',
+              showConfirmButton: false,
+              timer: 2000,
+              type: 'success'
+        });
+          setTimeout(function(){
+              window.location.href="{% url 'SocialMedia:profil' %}"
+          }, 2000)
+      }
+    })
+
+    {% endif %}
+    </script>
+{% endblock %}
+
