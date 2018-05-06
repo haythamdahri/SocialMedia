@@ -8,7 +8,6 @@ from main_app.models import *
 # Create your models here.
 
 
-
 class Notification(models.Model):
     url = models.URLField(max_length=500)
     message = models.CharField(max_length=1000)
@@ -148,6 +147,79 @@ class ReseauSocialFile(models.Model):
 
     def __str__(self):
         return self.fichier.name
+
+class OffreEmploi(models.Model):
+    tel = models.IntegerField()
+    email = models.EmailField()
+    pays = models.CharField(max_length=300)
+    ville = models.CharField(max_length=300)
+    diplome_requis = models.CharField(max_length=300)
+    type_contrat = models.CharField(max_length=300)
+    description_poste = models.TextField()
+    profil_recherche = models.TextField()
+    presentation_entreprise = models.TextField()
+    en_cours = models.BooleanField()
+    entreprise = models.ForeignKey(Entreprise, on_delete=models.CASCADE)
+    profil_publicateur = models.ForeignKey(Profil, on_delete=models.CASCADE,
+                                           related_name="profil_publicateur")
+    profil_postulants = models.ManyToManyField(Profil, related_name="profil_postulants")
+
+
+
+class Poste(models.Model):
+    nom_poste = models.CharField(max_length=300)
+
+
+class Experience(models.Model):
+    entreprise = models.ForeignKey(Entreprise, on_delete=models.CASCADE,null=True, blank=True)
+    nom_entreprise = models.CharField(max_length=300)
+    poste = models.ForeignKey(Poste, on_delete=models.CASCADE,null=True, blank=True)
+    nom_poste = models.CharField(max_length=300)
+    date_debut = models.DateField()
+    date_fin = models.DateField( null=True, blank=True)
+    actuel = models.BooleanField()
+    description = models.TextField( null=True, blank=True)
+    profil = models.ForeignKey(Profil, on_delete=models.CASCADE)
+
+
+class Ecole(models.Model):
+    nom = models.CharField(max_length=300)
+    image = models.ImageField(upload_to="SocialMedia/Image/")
+
+
+class Formation(models.Model):
+    ecole = models.ForeignKey(Ecole, on_delete=models.CASCADE,null=True, blank=True)
+    nom_ecole = models.CharField(max_length=300)
+    domaine = models.CharField(max_length=300, null=True, blank=True)
+    resultat_obtenu = models.CharField(max_length=300, null=True, blank=True)
+    activite_et_associations = models.TextField( null=True, blank=True)
+    annee_debut = models.DateField()
+    annee_fin = models.DateField()
+    description = models.TextField( null=True, blank=True)
+    profil = models.ForeignKey(Profil, on_delete=models.CASCADE)
+
+
+class Organisme(models.Model):
+    nom = models.CharField(max_length=300)
+    image = models.ImageField(upload_to="SocialMedia/Image/")
+
+
+class ActionBenevole(models.Model):
+    organisme = models.ForeignKey(Organisme, on_delete=models.CASCADE,null=True, blank=True)
+    nom_organisme = models.CharField(max_length=300)
+    poste = models.ForeignKey(Poste, on_delete=models.CASCADE,null=True, blank=True)
+    nom_poste = models.CharField(max_length=300)
+    cause = models.TextField(null=True, blank=True)
+    date_debut = models.DateField()
+    date_fin = models.DateField()
+    description = models.TextField(null=True, blank=True)
+
+
+class Langue(models.Model):
+    NIVEAU_LANGUE = (('debutant', 'Débutant'), ('intermediaire', 'Intermédiaire'), ('expert', 'Expert'))
+    nom = models.CharField(max_length=300)
+    niveau = models.CharField(max_length=300, choices=NIVEAU_LANGUE)
+    profils = models.ManyToManyField(Profil, related_name="profils")
 
 
 

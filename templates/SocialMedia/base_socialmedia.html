@@ -32,6 +32,12 @@
     <!-- ==== Main Stylesheet ==== -->
     <link rel="stylesheet" href="{% static 'SocialMedia/style.css' %}">
 
+    <!-- ==== Backbone Modal Themes Stylesheet ==== -->
+    <link rel="stylesheet" href="{% static 'SocialMedia/css/backbone.modal.theme.css' %}">
+
+    <!-- ==== Backbone Modal Stylesheet ==== -->
+    <link rel="stylesheet" href="{% static 'SocialMedia/css/backbone.modal.theme.css' %}">
+
     <!-- ==== Responsive Stylesheet ==== -->
     <link rel="stylesheet" href="{% static 'SocialMedia/css/responsive-style.css' %}">
 
@@ -153,13 +159,13 @@
                         </li>
 
                         <li class="dropdown">
-                            <a href="cart.html" title="Notifications" class="text-center-menu">
+                            <a href="#" data-toggle="dropdown" title="Notifications" class="text-center-menu">
                                 <i class="fa fa-cog"></i>
                                 <i class="fa fa-sort-down"></i>
                             </a>
 
                              <ul class="dropdown-menu">
-                                <li><a href="forums.html">Modifier mes infos</a></li>
+                                <li><a href="forums.html"><i class="fa fa-pencil-square-o" aria-hidden="true" data-toggle="modal" data-target="#editInfosModal"></i> Modifier mes infos</a></li>
                                 <li><a href="sub-forums.html">...</a></li>
                                 <li><a href="topics.html">...</a></li>
                             </ul>
@@ -537,6 +543,24 @@
 
     <!-- Optional: include a polyfill for ES6 Promises for IE11 and Android browser -->
     <script src="https://unpkg.com/promise-polyfill@7.1.0/dist/promise.min.js"></script>
+
+    <!-- ==== Custom Script ==== -->
+    <script src="{% static 'SocialMedia/js/backbone.marionette.modals-min.js' %}"></script>
+
+    <!-- ==== Custom Script ==== -->
+    <script src="{% static 'SocialMedia/js/backbone.marionette.modals.js' %}"></script>
+
+    <!-- ==== Custom Script ==== -->
+    <script src="{% static 'SocialMedia/js/backbone.modal-bundled-min.js' %}"></script>
+
+    <!-- ==== Custom Script ==== -->
+    <script src="{% static 'SocialMedia/js/backbone.modal-bundled.js' %}"></script>
+
+    <!-- ==== Custom Script ==== -->
+    <script src="{% static 'SocialMedia/js/backbone.modal-min.js.js' %}"></script>
+
+    <!-- ==== Custom Script ==== -->
+    <script src="{% static 'SocialMedia/js/backbone.modal.js' %}"></script>
 
     <!-- ==== Custom Script ==== -->
     <script src="{% static 'SocialMedia/js/custom.js' %}"></script>

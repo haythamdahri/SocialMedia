@@ -78,6 +78,7 @@ def profil(request):
             p.save()
         profiles = Profil.objects.all().order_by('-id')[:20]
         photoform = PhotoForm()
+        Experiences = Experience.objects.filter()
         return render(request, 'SocialMedia/profil/profil.html', {'profiles': profiles, 'photoform':photoform, 'is_first':is_first, 'nbdemandes':DemandeAmi.objects.filter(recepteur=request.user.profil, statut=0).count()})
     else:
         messages.error(request, "Veuiller Se Connecter!")
