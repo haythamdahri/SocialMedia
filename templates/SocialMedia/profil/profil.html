@@ -46,6 +46,8 @@
                                 </div>
                                 <!-- Profile Item End -->
 
+                            <hr style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.7);">
+
                                 <!-- Profile Item Start -->
                                 <div class="profile--item">
                                     <div class="profile--heading">
@@ -61,6 +63,10 @@
                                 </div>
                                 <!-- Profile Item End -->
 
+
+                                <hr style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.7);">
+
+
                                 <!-- Profile Item Start -->
                                 <div class="profile--item">
 
@@ -73,16 +79,27 @@
 
                                     <div class="profile--info">
                                         <dl>
-
-                                            <dt>
-                                                <p class="h6 fw--700 text-darkest">Graphic Designer 2010 - 2012</p>
-                                                <p><small class="fw--400 fs--12 text-darker">Graphicriver.net at Sydney</small></p>
-                                            </dt>
-                                            <dd>
-                                                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour which don't look even slightly believable.</p>
-                                            </dd>
+                                            {% for experience in experiences %}
+                                                <dt>
+                                                    <p class="h6 fw--700 text-darkest">{{ experience.poste.nom_poste }} {{ experience.date_debut }} - {{ experience.date_fin }}</p>
+                                                    <p><small class="fw--400 fs--12 text-darker">{{ experience.entreprise.siteInternet }} at {{ experience.entreprise.ville }}</small></p>
+                                                </dt>
+                                                <dd>
+                                                    <p>{{ experience.description }}</p>
+                                                </dd>
+                                                {% if not forloop.last %}
+                                                <hr width="50%" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.7);height:1px;border:none;color:#1ea1f2;background-color:#1ea1f2"; />
+                                                {% endif %}
+                                            {% endfor %}
                                         </dl>
                                     </div>
+                                </div>
+                                <!-- Profile Item End -->
+
+                            <hr style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.7);">
+
+                                <!-- Profile Item Start -->
+                                <div class="profile--item">
 
                                     <div class="profile--heading">
                                         <h3 class="h4 fw--700">
@@ -91,34 +108,38 @@
                                         </h3>
                                     </div>
 
+
                                     <div class="profile--info">
                                         <dl>
-                                            <dt>
-                                                <p class="h6 fw--700 text-darkest">Graphic Designer 2010 - 2012</p>
-                                                <p><small class="fw--400 fs--12 text-darker">Graphicriver.net at Sydney</small></p>
-                                            </dt>
-                                            <dd>
-                                                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour which don't look even slightly believable.</p>
-                                            </dd>
+                                            {% for formation in formations %}
+                                                <dt>
+                                                    <p><b class="h-25 fw--700 text-darkest">Nom Formation: </b><span class="h6 fw--400 text-darkest">{{ formation.nom_formation }}</span></p>
+                                                    <p><b class="h-25 fw--700 text-darkest">Domaine:</b><small class="h6 fw--400 fs--12 text-darker"> {{ formation.domaine }}</small></p>
+                                                </dt>
+                                                <dd>
+                                                        <div class="row">
+                                                                <div class="col-xs-4"><img src="{{ formation.ecole.image.url }}" class="img-responsive img-rounded float--left" /></div>
+                                                                <div class="col-xs-8">
+                                                                    <p class="h6 fa--700 text-darkest">{{ formation.ecole.nom }}</p>
+                                                                    <p class="h6 fw--400 text-darkest">{{ formation.annee_debut|date:"Y" }} - {{ formation.annee_fin|date:"Y" }}</p>
+                                                                </div>
+                                                        </div>
+                                                            <p style="margin-top: 8px;"><b>Description:</b><label class="h6 fw--400 text-darkest">{{ formation.description }}.</label></p>
 
-                                            <dt>
-                                                <p class="h6 fw--700 text-darkest">Font-End Developer 2012 - 2014</p>
-                                                <p><small class="fw--400 fs--12 text-darker">Themeforest.net at Australia</small></p>
-                                            </dt>
-                                            <dd>
-                                                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour which don't look even slightly believable.</p>
-                                            </dd>
-
-                                            <dt>
-                                                <p class="h6 fw--700 text-darkest">Web Developer 2014 - Still Now</p>
-                                                <p><small class="fw--400 fs--12 text-darker">Codecanyon.net at Sydney</small></p>
-                                            </dt>
-                                            <dd>
-                                                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour which don't look even slightly believable.</p>
-                                            </dd>
+                                                </dd>
+                                                {% if not forloop.last %}
+                                                    <hr width="50%" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.7);height:1px;border:none;color:#1ea1f2;background-color:#1ea1f2";></hr>
+                                                {% endif %}
+                                            {% endfor %}
                                         </dl>
                                     </div>
+                                </div>
+                                <!-- Profile Item End -->
 
+                                <hr style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.7);">
+
+                                <!-- Profile Item Start -->
+                                <div class="profile--item">
 
                                     <div class="profile--heading">
                                         <h3 class="h4 fw--700">
@@ -129,35 +150,32 @@
 
                                     <div class="profile--info">
                                         <dl>
+                                            {% for actionBenevole in actionsBenevoles %}
                                             <dt>
-                                                <p class="h6 fw--700 text-darkest">Graphic Designer 2010 - 2012</p>
-                                                <p><small class="fw--400 fs--12 text-darker">Graphicriver.net at Sydney</small></p>
+                                                <p class="h6 fw--700 text-darkest">{{ actionBenevole.poste.nom_poste }} <span class="h6 fw--400 text-darkest">entre</span> {{ actionBenevole.date_debut }} - {{ actionBenevole.date_fin }}</p>
+                                                <p><small class="fw--400 fs--12 text-darker">{{ actionBenevole.cause }}</small></p>
                                             </dt>
                                             <dd>
-                                                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour which don't look even slightly believable.</p>
-                                            </dd>
+                                                <div class="row">
+                                                    <div class="col-xs-4"><img src="{{ actionBenevole.organisme.image.url }}" alt="Supprimée" class="img-responsive img-rounded"></div>
+                                                    <div class="col-xs-8 center-block">
+                                                        <p class="h6 fa--700 text-darkest">{{ actionBenevole.organisme.nom }}.</p>
+                                                        <p class="h6 fw--400 text-darkest">{{ actionBenevole.date_debut|date:"Y/m/d" }} - {{ actionBenevole.date_fin|date:"Y/m/d" }}.</p>
+                                                        <p class="h6 fw--400 text-darkest">{{ actionBenevole.description }}.</p>
 
-                                            <dt>
-                                                <p class="h6 fw--700 text-darkest">Font-End Developer 2012 - 2014</p>
-                                                <p><small class="fw--400 fs--12 text-darker">Themeforest.net at Australia</small></p>
-                                            </dt>
-                                            <dd>
-                                                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour which don't look even slightly believable.</p>
+                                                    </div>
+                                                </div>
                                             </dd>
-
-                                            <dt>
-                                                <p class="h6 fw--700 text-darkest">Web Developer 2014 - Still Now</p>
-                                                <p><small class="fw--400 fs--12 text-darker">Codecanyon.net at Sydney</small></p>
-                                            </dt>
-                                            <dd>
-                                                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour which don't look even slightly believable.</p>
-                                            </dd>
+                                                {% if not forloop.last %}
+                                                <hr width="50%" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.7);height:1px;border:none;color:#1ea1f2;background-color:#1ea1f2;" />
+                                                {% endif %}
+                                            {% endfor %}
                                         </dl>
                                     </div>
-
-
                                 </div>
                                 <!-- Profile Item End -->
+
+                            <hr style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.7);">
 
                                 <!-- Profile Item Start -->
                                 <div class="profile--item">
@@ -172,19 +190,19 @@
                                         <table class="table">
                                             <tr>
                                                 <th class="fw--700 text-darkest">Phone</th>
-                                                <td><a href="tel:+16105598246">{{ user.profil.tel }}</a></td>
+                                                <td><a class="h6 fa--400 text-darkest" href="tel:+16105598246">{{ user.profil.tel }}</a></td>
                                             </tr>
                                             <tr>
                                                 <th class="fw--700 text-darkest">E-mail</th>
-                                                <td><a href="#"><span class="__cf_email__" data-cfemail="4622232b2906233e272b362a236825292b">{% if user.email is not None %}{{ user.email }}{% else %}PROTECTED{% endif %}</span></a></td>
+                                                <td><a class="h6 fa--400 text-darkest" href="#"><span class="__cf_email__" data-cfemail="4622232b2906233e272b362a236825292b">{% if user.email is not None %}{{ user.email }}{% else %}PROTECTED{% endif %}</span></a></td>
                                             </tr>
                                             <tr>
                                                 <th class="fw--700 text-darkest">Website</th>
-                                                <td><a href="{{ user.profil.website }}" target="_blank">{{ user.profil.website }}</a></td>
+                                                <td><a class="h6 fa--400 text-darkest" href="{{ user.profil.website }}" target="_blank">{{ user.profil.website }}</a></td>
                                             </tr>
                                             <tr>
                                                 <th class="fw--700 text-darkest">Address</th>
-                                                <td>{{ user.profil.address|default:"Non Rempli" }}</td>
+                                                <td class="h6 fa--400 text-darkest">{{ user.profil.address|default:"Non Rempli" }}</td>
                                             </tr>
                                         </table>
                                     </div>

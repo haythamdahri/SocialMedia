@@ -189,7 +189,7 @@ class Ecole(models.Model):
 
 class Formation(models.Model):
     ecole = models.ForeignKey(Ecole, on_delete=models.CASCADE,null=True, blank=True)
-    nom_ecole = models.CharField(max_length=300)
+    nom_formation = models.CharField(max_length=300)
     domaine = models.CharField(max_length=300, null=True, blank=True)
     resultat_obtenu = models.CharField(max_length=300, null=True, blank=True)
     activite_et_associations = models.TextField( null=True, blank=True)
@@ -213,6 +213,7 @@ class ActionBenevole(models.Model):
     date_debut = models.DateField()
     date_fin = models.DateField()
     description = models.TextField(null=True, blank=True)
+    profil = models.ForeignKey(Profil, on_delete=models.CASCADE)
 
 
 class Langue(models.Model):

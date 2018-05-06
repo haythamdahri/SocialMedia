@@ -70,16 +70,20 @@ def home(request):
     return render(request, 'SocialMedia/index.html')
 
 def profil(request):
+    context = dict()
     if request.user.is_authenticated:
         p = Profil.objects.get(user=request.user)
-        is_first = p.is_first_socialmedia
-        if is_first:
+        context['is_first'] = p.is_first_socialmedia
+        if context['is_first']:
             p.is_first = False
             p.save()
-        profiles = Profil.objects.all().order_by('-id')[:20]
-        photoform = PhotoForm()
-        Experiences = Experience.objects.filter()
-        return render(request, 'SocialMedia/profil/profil.html', {'profiles': profiles, 'photoform':photoform, 'is_first':is_first, 'nbdemandes':DemandeAmi.objects.filter(recepteur=request.user.profil, statut=0).count()})
+        context['profiles'] = Profil.objects.all().order_by('-id')[:20]
+        context['photoform'] = PhotoForm()
+        context['experiences'] = Experience.objects.filter(profil=request.user.profil)
+        context['formations'] = Formation.objects.filter(profil=request.user.profil)
+        context['actionsBenevoles'] = ActionBenevole.objects.filter(profil=request.user.profil)
+        context['nbdemandes'] = DemandeAmi.objects.filter(recepteur=request.user.profil, statut=0).count()
+        return render(request, 'SocialMedia/profil/profil.html', context)
     else:
         messages.error(request, "Veuiller Se Connecter!")
         return redirect('main_app:log_in')
