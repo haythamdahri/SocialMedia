@@ -4773,9 +4773,9 @@ body.isScrolling #backToTop {
     11. COVER HEADER
 \*------------------------------------*/
 .cover--header.bg--img {
-    padding-top: 215px;
+    padding-top: 130px;
     color: #999;
-    background-size: 100% 300px;
+    background-size: 100% 260px;
     background-position: center top;
 }
 

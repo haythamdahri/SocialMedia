@@ -12,7 +12,7 @@ from main_app.models import *
 class Notification(models.Model):
     url = models.URLField(max_length=500)
     message = models.CharField(max_length=1000)
-    statut = models.BooleanField(default=False)
+    is_read = models.BooleanField(default=False)
     read_date = models.DateTimeField(default=False)
     profil_to_notify = models.ForeignKey(Profil, on_delete=models.CASCADE)
 
@@ -127,7 +127,6 @@ def generate_path(instance, filename):
         path = 'SocialMedia/Image/'
     else:
         path = 'SocialMedia/Fichier/'
-    print(path)
 
     return os.path.join(path, instance.fichier.name)
 
