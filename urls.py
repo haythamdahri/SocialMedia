@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
 from django.conf.urls import include,url
 from django.conf.urls.static import settings, static
 from . import views
@@ -17,7 +17,6 @@ urlpatterns = [
     path('profil/media', views.mediaProfil, name="mediaProfil"),
     path('supprimer-ami/', views.suprimerAmi, name="supprimerAmi"),
     url('rechercher-amis', views.rechercherAmis, name="rechercherAmis"),
-    url('profil/(?P<pk>\w+)/?$', views.getProfil, name="getProfil"),
     path('chat', views.chat, name="chat"),
     path('uploads', views.uploads.as_view(), name="uploads"),
 
@@ -40,6 +39,14 @@ urlpatterns = [
     path('profil/groupes', views.groupesProfil, name="groupes"),
 
     path('demandeajax', views.demandeViaAjax, name="demandeViaAjax"),
+
+    path('profil/editInterface/', views.editInterface, name="editInterface"),
+
+    path('profil/edit-about/', views.editAbout, name="editAbout"),
+
+    path('profil/edit-experience/<int:pk>/', views.editExperience, name="editExperience"),
+
+    path('profil/edit-formation/<int:pk>/', views.editFormation, name="editFormation"),
 
     path('', views.home, name="home"),
 

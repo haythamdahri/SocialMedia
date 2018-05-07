@@ -22,9 +22,8 @@ from django.contrib.auth.forms import (
     AuthenticationForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm,
 )
 from django.contrib.auth.tokens import default_token_generator
-
-
 from .models import *
+from main_app.models import *
 
 # Create your views here.
 
@@ -77,6 +76,11 @@ def profil(request):
         if context['is_first']:
             p.is_first = False
             p.save()
+        context['userInterfaceForm'] = UserInterfaceInfos()
+        context['poste_actuel'] = Experience.objects.filter(profil=request.user.profil, actuel=True).values('poste').values('nom_poste').last()
+        context['poste_actuel_renseigne'] = Experience.objects.filter(profil=request.user.profil, actuel=True).values('nom_poste').last()
+        context['ecole'] = Formation.objects.filter(profil=request.user.profil,ecole__isnull=False).values('ecole__nom').last()
+        context['ecole_renseignee'] = Formation.objects.filter(profil=request.user.profil, ecole__isnull=True).values('nom_ecole').last()
         context['profiles'] = Profil.objects.all().order_by('-id')[:20]
         context['photoform'] = PhotoForm()
         context['experiences'] = Experience.objects.filter(profil=request.user.profil)
@@ -355,14 +359,6 @@ def mediaProfil(request):
 
 
 
-
-
-
-
-def getProfil(request, id):
-    pass
-
-
 def suprimerAmi(request):
     pass
 
@@ -398,3 +394,119 @@ class uploads(View):
         else:
             data = {'is_valid': False}
         return JsonResponse(data)
+
+def editInterface(request):
+    if request.user.is_authenticated:
+        form = UserInterfaceInfos(request.POST or None)
+        if request.method == "POST":
+            if form.is_valid():
+                return
+        else:
+            form.username = request.user.username
+            form.poste_actuel = Experience.objects.filter(profil=request.user.profil).values('poste').values('nom_poste').last()
+            form.poste_actuel_renseigne = Experience.objects.filter(profil=request.user.profil).values('nom_poste').last()
+            form.ecole = Formation.objects.filter(profil=request.user.profil).values('ecole').last()
+            form.ecole_renseigne = Formation.objects.filter(profil=request.user.profil).values('nom_ecole').last()
+            entreprise_actuelle = request.user.profil.entreprise
+            entreprise_actuelle_renseignee = request.user.profil.entreprise.nom
+            entreprise_ville = request.user.profil.entreprise.ville
+            entreprise_pays = request.user.profil.entreprise.ville
+            profil_ville = request.user.profil.ville
+            profil_pays = request.user.profil.pays
+            return render(request, 'SocialMedia/profil/forms/base_forms.html', {'formUserInterface':form})
+    else:
+        messages.error(request, "Veuiller Se Connecter!")
+        return redirect('SocialMedia:login')
+
+
+def editAbout(request):
+    if request.user.is_authenticated:
+        form = UserAboutEdit(request.POST or None)
+        if request.method == "POST":
+            user = User.objects.get(pk=request.user.pk)
+            p = Profil.objects.get(user=request.user)
+            user.first_name = request.POST.get('firstName')
+            user.last_name = request.POST.get('lastName')
+            user.save()
+            p.facebook = request.POST.get('facebook')
+            p.youtube = request.POST.get('youtube')
+            p.instagram = request.POST.get('instagram')
+            p.linkedin = request.POST.get('linkedin')
+            p.date_naissance = request.POST.get('dateNaissance')
+            p.entreprise = get_object_or_404(Entreprise, pk=request.POST.get('entreprise'))
+            p.save()
+            return HttpResponse("Edited")
+        else:
+            entreprises = Entreprise.objects.all()
+            form = UserAboutEdit(initial={'entreprise':request.user.profil.entreprise})
+            return render(request, 'SocialMedia/profil/forms/editAboutForm.html', {'editForm':form, 'nom': 'A Propos de', 'entreprises':entreprises})
+    else:
+        messages.error(request, "Veuiller Se Connecter!")
+        return redirect('SocialMedia:login')
+
+def editExperience(request, pk):
+    if request.user.is_authenticated:
+        form = UserExperienceEdit(request.POST or None)
+        if request.method == "POST":
+            ps = Poste.objects.get(id=request.POST.get('poste'))
+            ent = Entreprise.objects.get(id=request.POST.get('entreprise'))
+            Ex = Experience.objects.get(id=pk)
+            Ex.poste = ps
+            Ex.entreprise = ent
+            Ex.date_debut = request.POST.get('dateDebut')
+            Ex.date_fin = request.POST.get('dateFin')
+            Ex.description = request.POST.get('description')
+            Ex.save()
+            return redirect('SocialMedia:profil')
+        else:
+            exp = get_object_or_404(Experience, id=pk)
+            poste = Experience.objects.get(id=pk).poste
+            entreprise = Experience.objects.get(id=pk).entreprise
+            postes = Poste.objects.all()
+            entreprises = Entreprise.objects.all()
+            form = UserExperienceEdit(initial={'poste':poste,
+                                               'entreprise':entreprise,
+                                               'dateDebut':exp.date_debut,
+                                               'dateFin':exp.date_fin,
+                                               'description':exp.description})
+            return render(request, 'SocialMedia/profil/forms/editExperience.html', {'editForm':form, 'exp':exp.id, 'nom': 'Experience De '})
+    else:
+        messages.error(request, "Veuiller Se Connecter!")
+        return redirect('SocialMedia:login')
+
+
+def editFormation(request, pk):
+    if request.user.is_authenticated:
+        form = UserFormationEdit(request.POST or None)
+        if request.method == "POST":
+            ecole = Ecole.objects.get(id=request.POST.get('ecole'))
+            formation = Formation.objects.get(id=pk)
+            formation.ecole = ecole
+            formation.titre_formation = request.POST.get('titre_formation')
+            formation.nom_formation = request.POST.get('nom_formation')
+            formation.domaine = request.POST.get('domaine')
+            formation.resultat_obtenu = request.POST.get('resultat_obtenu')
+            formation.activite_et_associations = request.POST.get('activite_et_associations')
+            formation.anneeDebut = request.POST.get('anneeDebut')
+            formation.anneeFin = request.POST.get('anneeFin')
+            formation.description = request.POST.get('description')
+            formation.save()
+            return redirect('SocialMedia:profil')
+        else:
+            formation = get_object_or_404(Formation, id=pk)
+            ecole = Formation.objects.get(id=pk).ecole
+            entreprise = Experience.objects.get(id=pk).entreprise
+            ecoles = Ecole.objects.all()
+            form = UserFormationEdit(initial={'titre_formation':formation.titre_formation,
+                                              'ecole':ecole,
+                                              'nom_formation':formation.nom_formation,
+                                              'domaine':formation.domaine,
+                                              'resultat_obtenu':formation.resultat_obtenu,
+                                              'activite_et_associations':formation.activite_et_associations,
+                                              'anneeDebut':formation.annee_debut,
+                                              'anneeFin':formation.annee_fin,
+                                              'description':formation.description,})
+            return render(request, 'SocialMedia/profil/forms/editFormation.html', {'editForm':form, 'nom': 'A Propos de', 'formation':formation.id, 'postes':ecoles})
+    else:
+        messages.error(request, "Veuiller Se Connecter!")
+        return redirect('SocialMedia:login')

@@ -1,7 +1,6 @@
 {% extends "SocialMedia/base_socialmedia.html" %}
 {% load staticfiles %}
 {% load widget_tweaks %}
-{% load sekizai_tags %}
 {% block title %}{{ user.username }}{% endblock %}
 {% block content %}
 
@@ -29,7 +28,7 @@
 									<img id="profilpic" class="image " src="{{ user.profil.photo_profil.image.url|default:'/media/SocialMedia/default.jpg' }}" alt="">
 									<div class="middle">
 									<div class="text">
-										<a href="javascript:return false"  title="Photo Profil" class="btn-link" data-toggle="tooltip" data-placement="bottom">
+                                        <a href="javascript:return false"  title="Photo Profil" class="btn-link" data-toggle="tooltip" data-placement="bottom">
 											<i id="btprofilchange" class="btchangepic profilpic fa fa-picture-o" data-toggle="modal" data-target="#squarespaceModalprofil" aria-hidden="true"></i>
 										</a>
 									</div>
@@ -39,13 +38,20 @@
 						</div>
 						<div class="cover--user-name">
 
-
 				<h2 class="h3 fw--600">{{ user.first_name }} {{ user.last_name }}</h2>
 						</div>
+                        <div class="row">
+                                        <div class="col">
+                                            <a href="{% url 'SocialMedia:editAbout' %}"><i class="fa fa-pencil-square-o float--right" style="font-size:20px;margin-right: 20px;" aria-hidden="true"></i></a>
+                                        </div>
+                                        <div class="col">
+                                            <a href="javascript:void(0)"><i class="fa fa-plus-square float--right" style="font-size:20px;margin-right: 20px;" aria-hidden="true"></i></a>
+                                        </div>
+                                    </div>
 
 						<div class="cover--user-desc fw--400 fs--18 fstyle--i text-darkest" style="margin-top: 0;">
                             <p style="margin: 0;">
-							    {% if user.profil.poste is not None %}Poste Actuel: {{ user.profil.poste }}{% else %}Non Specialisé • {% endif %}{{ user.profil.ecole|default:'Ecole Non Mentionnée' }} <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+							    {% if poste_actuel is not None and poste_actuel_renseigne is not None %}Poste Actuel: {{ poste_actuel.nom_poste }} • {% else %}Non Specialisé • {% endif %}{{ ecole.ecole__nom|default:ecole_renseignee|default_if_none:"Non Mentionnée" }} <i class="fa fa-graduation-cap" aria-hidden="true"></i>
 
                             </p>
 							<p style="margin: 0;">
@@ -53,7 +59,7 @@
 
                             </p>
                             <p style="margin: 0;">
-							    {% if user.profil.pays is not None or user.profil.pays is not None %}{{ user.profil.ville }}, {{ user.profil.pays }}{% endif %} <i class="fa fa-globe" aria-hidden="true"></i>
+							    {% if user.profil.pays is not None or user.profil.pays is not None %}{{ user.profil.ville }}, {{ user.profil.pays }} <i class="fa fa-globe" aria-hidden="true"></i>{% endif %}
 
                             </p>
 
@@ -87,6 +93,8 @@
                     <!-- Main Content End -->
 
                 </div>
+
+{% block sideBar %}
 
 					<!-- Main Sidebar Start -->
                     <div class="col-md-4 main--sidebar pb--60" data-trigger="stickyScroll">
@@ -262,7 +270,6 @@
                     <!-- Main Sidebar End -->
 
                 </div>
-{% block sideBar %}
 
 {% endblock %}
 
@@ -271,113 +278,10 @@
         </section>
         <!-- Page Wrapper End -->
 
-{% block modals %}
-        <!-- line modal for cover -->
-    <div id="#formcover">
-<div class="modal fade" id="squarespaceModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-	<div class="modal-content">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-			<h3 class="modal-title" id="lineModalLabel">Choisir Votre Image</h3>
-		</div>
-		<div class="modal-body">
 
-            <!-- content goes here -->
-              <form method="post" onsubmit="return " id="photoform" enctype="multipart/form-data">
-                  {% csrf_token %}
-                      <div class="form-group">
-                          <div class="input-group">
-                              <span class="input-group-btn">
-                                  <span class="btn btn-default btn-file" style="font-weight: bold;font-size: 22px;">
-                                      Choisir Une Image…{% render_field photoform.image accept='image/*' class="form-control" style="cursor: pointer" id="imgInp" %}
-                                  </span>
-                              </span>
-                                  <input type="text" class="form-control" readonly>
-                          </div>
-                      </div>
-                      <div class="form-group" id="photo">
-                        <img id='img-upload' />
-                      </div>
-                  <div class="form-group text-center">
-                      <button class="mybt" style="background-color:#1ea1f2; border: none;border-radius:50px;color:#ffffff;display:inline-block;line-height:44px;text-align:center;text-decoration:none;width:250px;-webkit-text-size-adjust:none;" type="submit"><i class="fa fa-check-square-o" aria-hidden="true"></i> Changer Photo</button>
-                  </div>
-              </form>
-                    <div class="panel-group uploadprogress hidden">
-                        <h4 class="modal-title">Uploading...</h4>
-                            <div class="progress">
-                              <div class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
-                            </div>
-                    </div>
-
-		</div>
-		<div class="modal-footer">
-			<div class="btn-group btn-group-justified" role="group" aria-label="group button">
-				<div class="btn-group" role="group">
-					<button type="button" class="btn btn-default btcancelupload" data-dismiss="modal"  role="button"><i class="fa fa-times" aria-hidden="true"></i> Annuler</button>
-				</div>
-			</div>
-		</div>
-	</div>
-  </div>
-</div>
-    </div>
-    <!-- line modal for cover -->
-    <div id="#formprofil">
-<div class="modal fade" id="squarespaceModalprofil" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-	<div class="modal-content">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-			<h3 class="modal-title" id="lineModalLabel">Choisir Votre Image De Profil</h3>
-		</div>
-		<div class="modal-body">
-
-            <!-- content goes here -->
-              <form method="post" onsubmit="return " id="photoprofilform" enctype="multipart/form-data">
-                  {% csrf_token %}
-                      <div class="form-group">
-                          <div class="input-group">
-                              <span class="input-group-btn">
-                                  <span class="btn btn-default btn-file1" style="font-weight: bold;font-size: 22px;cursor: pointer;">
-                                      Choisir Votre Image De Profil…{% render_field photoform.image class="form-control" accept='image/*' id="imgInp1" %}
-                                  </span>
-                              </span>
-                                  <input type="text" class="form-control" readonly>
-                          </div>
-                      </div>
-                      <div class="form-group" id="photo1">
-                        <img id='img-upload1' />
-                      </div>
-                  <div class="form-group text-center">
-                      <button class="mybt" style="background-color:#1ea1f2; border: none;border-radius:50px;color:#ffffff;display:inline-block;line-height:44px;text-align:center;text-decoration:none;width:250px;-webkit-text-size-adjust:none;" type="submit"><i class="fa fa-check-square-o" aria-hidden="true"></i> Changer Photo</button>
-                  </div>
-              </form>
-                    <div class="panel-group uploadprogress hidden uploadp">
-                        <h4 class="modal-title">Uploading...</h4>
-                            <div class="progress">
-                              <div class="progress-bar prog" role="progressbar" style="width: 0%;">0%</div>
-                            </div>
-                    </div>
-
-		</div>
-		<div class="modal-footer">
-			<div class="btn-group btn-group-justified" role="group" aria-label="group button">
-				<div class="btn-group" role="group">
-					<button type="button" class="btn btn-default btcancelupload btc" data-dismiss="modal"  role="button"><i class="fa fa-times" aria-hidden="true"></i> Annuler</button>
-				</div>
-			</div>
-		</div>
-	</div>
-  </div>
-</div>
-    </div>
-    <!-- line modal for cover -->
-    
 
 {% endblock %}
 
-{% endblock %}
 
 
 

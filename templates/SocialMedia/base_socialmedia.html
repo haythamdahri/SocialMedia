@@ -32,12 +32,6 @@
     <!-- ==== Main Stylesheet ==== -->
     <link rel="stylesheet" href="{% static 'SocialMedia/style.css' %}">
 
-    <!-- ==== Backbone Modal Themes Stylesheet ==== -->
-    <link rel="stylesheet" href="{% static 'SocialMedia/css/backbone.modal.theme.css' %}">
-
-    <!-- ==== Backbone Modal Stylesheet ==== -->
-    <link rel="stylesheet" href="{% static 'SocialMedia/css/backbone.modal.theme.css' %}">
-
     <!-- ==== Responsive Stylesheet ==== -->
     <link rel="stylesheet" href="{% static 'SocialMedia/css/responsive-style.css' %}">
 
@@ -165,7 +159,7 @@
                             </a>
 
                              <ul class="dropdown-menu">
-                                <li><a href="forums.html"><i class="fa fa-pencil-square-o" aria-hidden="true" data-toggle="modal" data-target="#editInfosModal"></i> Modifier mes infos</a></li>
+                                 <li><button><i class="fa fa-pencil-square-o" aria-hidden="true" data-toggle="modal" data-target="#infosModal"></i> Modifier mes infos</button></li>
                                 <li><a href="sub-forums.html">...</a></li>
                                 <li><a href="topics.html">...</a></li>
                             </ul>
@@ -502,28 +496,114 @@
 
 {% endblock %}
 
+{% block modals %}
+        <!-- line modal for cover -->
+    <div id="#formcover">
+<div class="modal fade" id="squarespaceModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+			<h3 class="modal-title" id="lineModalLabel">Choisir Votre Image</h3>
+		</div>
+		<div class="modal-body">
 
+            <!-- content goes here -->
+              <form method="post" onsubmit="return " id="photoform" enctype="multipart/form-data">
+                  {% csrf_token %}
+                      <div class="form-group">
+                          <div class="input-group">
+                              <span class="input-group-btn">
+                                  <span class="btn btn-default btn-file" style="font-weight: bold;font-size: 22px;">
+                                      Choisir Une Image…{% render_field photoform.image accept='image/*' class="form-control" style="cursor: pointer" id="imgInp" %}
+                                  </span>
+                              </span>
+                                  <input type="text" class="form-control" readonly>
+                          </div>
+                      </div>
+                      <div class="form-group" id="photo">
+                        <img id='img-upload' />
+                      </div>
+                  <div class="form-group text-center">
+                      <button class="mybt" style="background-color:#1ea1f2; border: none;border-radius:50px;color:#ffffff;display:inline-block;line-height:44px;text-align:center;text-decoration:none;width:250px;-webkit-text-size-adjust:none;" type="submit"><i class="fa fa-check-square-o" aria-hidden="true"></i> Changer Photo</button>
+                  </div>
+              </form>
+                    <div class="panel-group uploadprogress hidden">
+                        <h4 class="modal-title">Uploading...</h4>
+                            <div class="progress">
+                              <div class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
+                            </div>
+                    </div>
+
+		</div>
+		<div class="modal-footer">
+			<div class="btn-group btn-group-justified" role="group" aria-label="group button">
+				<div class="btn-group" role="group">
+					<button type="button" class="btn btn-default btcancelupload" data-dismiss="modal"  role="button"><i class="fa fa-times" aria-hidden="true"></i> Annuler</button>
+				</div>
+			</div>
+		</div>
+	</div>
+  </div>
+</div>
+    </div>
+    <!-- line modal for cover -->
+    <div id="#formprofil">
+<div class="modal fade" id="squarespaceModalprofil" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+			<h3 class="modal-title" id="lineModalLabel">Choisir Votre Image De Profil</h3>
+		</div>
+		<div class="modal-body">
+
+            <!-- content goes here -->
+              <form method="post" onsubmit="return " id="photoprofilform" enctype="multipart/form-data">
+                  {% csrf_token %}
+                      <div class="form-group">
+                          <div class="input-group">
+                              <span class="input-group-btn">
+                                  <span class="btn btn-default btn-file1" style="font-weight: bold;font-size: 22px;cursor: pointer;">
+                                      Choisir Votre Image De Profil…{% render_field photoform.image class="form-control" accept='image/*' id="imgInp1" %}
+                                  </span>
+                              </span>
+                                  <input type="text" class="form-control" readonly>
+                          </div>
+                      </div>
+                      <div class="form-group" id="photo1">
+                        <img id='img-upload1' />
+                      </div>
+                  <div class="form-group text-center">
+                      <button class="mybt" style="background-color:#1ea1f2; border: none;border-radius:50px;color:#ffffff;display:inline-block;line-height:44px;text-align:center;text-decoration:none;width:250px;-webkit-text-size-adjust:none;" type="submit"><i class="fa fa-check-square-o" aria-hidden="true"></i> Changer Photo</button>
+                  </div>
+              </form>
+                    <div class="panel-group uploadprogress hidden uploadp">
+                        <h4 class="modal-title">Uploading...</h4>
+                            <div class="progress">
+                              <div class="progress-bar prog" role="progressbar" style="width: 0%;">0%</div>
+                            </div>
+                    </div>
+
+		</div>
+		<div class="modal-footer">
+			<div class="btn-group btn-group-justified" role="group" aria-label="group button">
+				<div class="btn-group" role="group">
+					<button type="button" class="btn btn-default btcancelupload btc" data-dismiss="modal"  role="button"><i class="fa fa-times" aria-hidden="true"></i> Annuler</button>
+				</div>
+			</div>
+		</div>
+	</div>
+  </div>
+</div>
+    </div>
+
+
+{% endblock %}
 
 {% block scripts %}
     {{ block.super }}
 
-
-    <script>
-        $("#linkReseauSocial").addClass("active");
-        $("#linkReseauSocial1").addClass("active");
-        $("#linkReseauSocial2").addClass("active");
-
-        $("#linkAcceuil").removeClass("active");
-        $("#linkQA").removeClass("active");
-        $("#linkAcceuil").removeClass("active");
-        $("#linkMarketPlace").removeClass("active");
-        $("#linkELearning").removeClass("active");
-        $("#linkAppelsOffres").removeClass("active");
-        $("#linkAppelsOffres1").removeClass("active");
-        $("#linkMarketPlace1").removeClass("active");
-        $("#linkELearning1").removeClass("active");
-        $("#linkAppelsOffres2").removeClass("active");
-    </script>
 
 
     <!-- ==== Plugins Bundle ==== -->
@@ -540,27 +620,6 @@
 
     <!-- ==== SweetJs Script ==== -->
     <script src="{% static 'SocialMedia/js/sweetalert2.js' %}"></script>
-
-    <!-- Optional: include a polyfill for ES6 Promises for IE11 and Android browser -->
-    <script src="https://unpkg.com/promise-polyfill@7.1.0/dist/promise.min.js"></script>
-
-    <!-- ==== Custom Script ==== -->
-    <script src="{% static 'SocialMedia/js/backbone.marionette.modals-min.js' %}"></script>
-
-    <!-- ==== Custom Script ==== -->
-    <script src="{% static 'SocialMedia/js/backbone.marionette.modals.js' %}"></script>
-
-    <!-- ==== Custom Script ==== -->
-    <script src="{% static 'SocialMedia/js/backbone.modal-bundled-min.js' %}"></script>
-
-    <!-- ==== Custom Script ==== -->
-    <script src="{% static 'SocialMedia/js/backbone.modal-bundled.js' %}"></script>
-
-    <!-- ==== Custom Script ==== -->
-    <script src="{% static 'SocialMedia/js/backbone.modal-min.js.js' %}"></script>
-
-    <!-- ==== Custom Script ==== -->
-    <script src="{% static 'SocialMedia/js/backbone.modal.js' %}"></script>
 
     <!-- ==== Custom Script ==== -->
     <script src="{% static 'SocialMedia/js/custom.js' %}"></script>

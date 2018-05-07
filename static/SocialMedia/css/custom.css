@@ -287,3 +287,8 @@ You can write your custom css styles in this file...
 {
     position: none;
 }
+
+.myform .form-control
+{
+    font-size: 12px;
+}

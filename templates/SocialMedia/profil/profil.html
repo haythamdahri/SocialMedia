@@ -1,7 +1,6 @@
 {% extends "SocialMedia/profil/base_profil.html" %}
 {% load staticfiles %}
 {% load widget_tweaks %}
-{% load sekizai_tags %}
 {% block title %}{{ user.username }}{% endblock %}
 
 {% block contentProfil %}
@@ -13,8 +12,11 @@
                                         <h3 class="h4 fw--700">
                                             <span class="mr--4">A Propos</span>
                                             <i class="ml--10 text-primary fa fa-caret-right"></i>
+                                            <a href="{% url 'SocialMedia:editAbout' %}" ><i class="fa fa-pencil-square-o float--right" style="font-size:20px;" aria-hidden="true"></i></a>
+                                            <a href="javascript:void(0)"><i class="fa fa-plus-square float--right" style="font-size:20px;margin-right: 20px;" aria-hidden="true"></i></a>
                                         </h3>
                                     </div>
+
 
                                     <div class="profile--info">
                                         <table class="table">
@@ -22,7 +24,7 @@
                                             <tr>
                                                 <th class="fw--700 text-darkest">Linked Accounts</th>
                                                 <td>
-                                                    <a href="{{ user.profil.SocialMedia }}" target="_blank" class="btn-link"><i style="font-size:20px;color:#3b5999" class="fa fa-SocialMedia-square" aria-hidden="true"></i></a>
+                                                    <a href="{{ user.profil.facebook }}" target="_blank" class="btn-link"><i style="font-size:20px;color:#3b5999" class="fa fa-facebook-square" aria-hidden="true"></i></a>
                                                     <a href="{{ user.profil.youtube }}" target="_blank" class="btn-link"><i style="font-size:20px;color:#cd201f" class="fa fa-youtube-square" aria-hidden="true"></i></a>
                                                     <a href="{{ user.profil.instagram }}" target="_blank" class="btn-link"><i style="font-size:20px;color:#e4405f" class="fa fa-instagram" aria-hidden="true"></i></a>
                                                     <a href="{{ user.profil.linkedin }}" target="_blank" class="btn-link"><i style="font-size:20px;color:#0077B5" class="fa fa-linkedin-square" aria-hidden="true"></i></a>
@@ -54,6 +56,8 @@
                                         <h3 class="h4 fw--700">
                                             <span class="mr--4">Biography</span>
                                             <i class="ml--10 text-primary fa fa-caret-right"></i>
+                                            <a href="javascript:void(0)"><i class="fa fa-pencil-square-o float--right" style="font-size:20px;" aria-hidden="true"></i></a>
+                                            <a href="javascript:void(0)"><i class="fa fa-plus-square float--right" style="font-size:20px;margin-right: 20px;" aria-hidden="true"></i></a>
                                         </h3>
                                     </div>
 
@@ -78,20 +82,23 @@
                                     </div>
 
                                     <div class="profile--info">
-                                        <dl>
                                             {% for experience in experiences %}
-                                                <dt>
-                                                    <p class="h6 fw--700 text-darkest">{{ experience.poste.nom_poste }} {{ experience.date_debut }} - {{ experience.date_fin }}</p>
-                                                    <p><small class="fw--400 fs--12 text-darker">{{ experience.entreprise.siteInternet }} at {{ experience.entreprise.ville }}</small></p>
-                                                </dt>
-                                                <dd>
-                                                    <p>{{ experience.description }}</p>
-                                                </dd>
+                                                <div class="row">
+                                                    <div class="col-xs-2"><img src="{{ experience.entreprise.logo.url }}" class="img-responsive img-rounded float--left" /></div>
+                                                    <div class="col-xs-10">
+                                                                <a href="{% url 'SocialMedia:editExperience' experience.id %}"><i class="fa fa-pencil-square-o float--right" style="font-size:20px;" aria-hidden="true"></i></a>
+                                                                <a href="javascript:void(0)"><i class="fa fa-plus-square float--right" style="font-size:20px;margin-right: 20px;" aria-hidden="true"></i></a>
+                                                        <div class="row"><p class="h6 fa--700 text-darkest">{{ experience.poste.nom_poste | default:experience.nom_poste }}</p></div>
+                                                        <div class="row"><p class="h6 fw--600 text-darkest">{{ experience.entreprise.nom }}</div>
+                                                        <div class="row"><p class="h6 fw--500 text-darkest">{{ experience.date_debut|date:"M. Y" }} - {{ experience.date_fin|date:"M. Y" }} &#xb7; {{ experience.date_fin|timeuntil:experience.date_debut   }}</p></div>
+                                                        <div class="row"><p class="h6 fw--400 text-darkest">{{ experience.entreprise.ville }}</div>
+                                                        <div class="row"><p class="h6 fw--400 text-darkest" style="margin-top: 8px;">{{ experience.description}}</div>
+                                                    </div>
+                                                </div>
                                                 {% if not forloop.last %}
                                                 <hr width="50%" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.7);height:1px;border:none;color:#1ea1f2;background-color:#1ea1f2"; />
                                                 {% endif %}
                                             {% endfor %}
-                                        </dl>
                                     </div>
                                 </div>
                                 <!-- Profile Item End -->
@@ -103,35 +110,30 @@
 
                                     <div class="profile--heading">
                                         <h3 class="h4 fw--700">
-                                            <span class="mr--4">Formations Univertsitaires</span>
+                                            <span class="mr--4">Formation</span>
                                             <i class="ml--10 text-primary fa fa-caret-right"></i>
                                         </h3>
                                     </div>
 
 
                                     <div class="profile--info">
-                                        <dl>
-                                            {% for formation in formations %}
-                                                <dt>
-                                                    <p><b class="h-25 fw--700 text-darkest">Nom Formation: </b><span class="h6 fw--400 text-darkest">{{ formation.nom_formation }}</span></p>
-                                                    <p><b class="h-25 fw--700 text-darkest">Domaine:</b><small class="h6 fw--400 fs--12 text-darker"> {{ formation.domaine }}</small></p>
-                                                </dt>
-                                                <dd>
-                                                        <div class="row">
-                                                                <div class="col-xs-4"><img src="{{ formation.ecole.image.url }}" class="img-responsive img-rounded float--left" /></div>
-                                                                <div class="col-xs-8">
-                                                                    <p class="h6 fa--700 text-darkest">{{ formation.ecole.nom }}</p>
-                                                                    <p class="h6 fw--400 text-darkest">{{ formation.annee_debut|date:"Y" }} - {{ formation.annee_fin|date:"Y" }}</p>
-                                                                </div>
-                                                        </div>
-                                                            <p style="margin-top: 8px;"><b>Description:</b><label class="h6 fw--400 text-darkest">{{ formation.description }}.</label></p>
 
-                                                </dd>
+                                            {% for formation in formations %}
+                                                <div class="row">
+                                                    <div class="col-xs-2"><img src="{{ formation.ecole.logo.url }}" class="img-responsive img-rounded float--left" /></div>
+                                                    <div class="col-xs-10">
+                                            <a href="{% url 'SocialMedia:editFormation' formation.id %}"><i class="fa fa-pencil-square-o float--right" style="font-size:20px;" aria-hidden="true"></i></a>
+                                            <a href="javascript:void(0)"><i class="fa fa-plus-square float--right" style="font-size:20px;margin-right: 20px;" aria-hidden="true"></i></a>
+                                                        <div class="row"><p class="h6 fa--700 text-darkest">{{ formation.ecole.nom }}</p></div>
+                                                        <div class="row"><p class="h6 fw--600 text-darkest">{{ formation.nom_formation }} - {{ formation.domaine }}</div>
+                                                        <div class="row"><p class="h6 fw--500 text-darkest">{{ formation.annee_debut|date:"Y" }} - {{ formation.annee_fin|date:"Y" }}</p></div>
+                                                    </div>
+                                                </div>
                                                 {% if not forloop.last %}
                                                     <hr width="50%" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.7);height:1px;border:none;color:#1ea1f2;background-color:#1ea1f2";></hr>
                                                 {% endif %}
                                             {% endfor %}
-                                        </dl>
+
                                     </div>
                                 </div>
                                 <!-- Profile Item End -->
@@ -152,17 +154,19 @@
                                         <dl>
                                             {% for actionBenevole in actionsBenevoles %}
                                             <dt>
-                                                <p class="h6 fw--700 text-darkest">{{ actionBenevole.poste.nom_poste }} <span class="h6 fw--400 text-darkest">entre</span> {{ actionBenevole.date_debut }} - {{ actionBenevole.date_fin }}</p>
-                                                <p><small class="fw--400 fs--12 text-darker">{{ actionBenevole.cause }}</small></p>
+
                                             </dt>
                                             <dd>
                                                 <div class="row">
-                                                    <div class="col-xs-4"><img src="{{ actionBenevole.organisme.image.url }}" alt="Supprimée" class="img-responsive img-rounded"></div>
-                                                    <div class="col-xs-8 center-block">
-                                                        <p class="h6 fa--700 text-darkest">{{ actionBenevole.organisme.nom }}.</p>
-                                                        <p class="h6 fw--400 text-darkest">{{ actionBenevole.date_debut|date:"Y/m/d" }} - {{ actionBenevole.date_fin|date:"Y/m/d" }}.</p>
-                                                        <p class="h6 fw--400 text-darkest">{{ actionBenevole.description }}.</p>
-
+                                                    <div class="col-xs-2"><img src="{{ actionBenevole.organisme.image.url }}" alt="Supprimée" class="img-responsive img-rounded"></div>
+                                                    <div class="col-xs-10">
+                                            <a href="javascript:void(0)"><i class="fa fa-pencil-square-o float--right" style="font-size:20px;" aria-hidden="true"></i></a>
+                                            <a href="javascript:void(0)"><i class="fa fa-plus-square float--right" style="font-size:20px;margin-right: 20px;" aria-hidden="true"></i></a>
+                                                        <div class="row"><p class="h6 fw--700 text-darkest">{{ actionBenevole.poste.nom_poste | default_if_none:actionBenevole.nom_poste }} <span class="h6 fw--400 text-darkest">entre</span> {{ actionBenevole.date_debut }} - {{ actionBenevole.date_fin }}</p></div>
+                                                        <div class="row"><p class="h6 fw--600 text-darkest">{{ actionBenevole.organisme.nom | default_if_none:actionBenevole.nom_poste }}.</p></div>
+                                                        <div class="row"><p class="h6 fw--600 text-darkest">{{ actionBenevole.date_debut|date:"Y/m/d" }} - {{ actionBenevole.date_fin|date:"Y/m/d" }} &#xb7; {{ actionBenevole.date_fin|timeuntil:actionBenevole.date_debut   }}</p></div>
+                                                        <div class="row"><p><small class="fw--500 fs--12 text-darker">{{ actionBenevole.cause }}</small></p></div>
+                                                        <div class="row"><p class="h6 fw--400 text-darkest">{{ actionBenevole.description }}.</p></div>
                                                     </div>
                                                 </div>
                                             </dd>
@@ -183,6 +187,8 @@
                                         <h3 class="h4 fw--700">
                                             <span class="mr--4">Contact</span>
                                             <i class="ml--10 text-primary fa fa-caret-right"></i>
+                                            <a href="javascript:void(0)"><i class="fa fa-pencil-square-o float--right" style="font-size:20px;" aria-hidden="true"></i></a>
+                                            <a href="javascript:void(0)"><i class="fa fa-plus-square float--right" style="font-size:20px;margin-right: 20px;" aria-hidden="true"></i></a>
                                         </h3>
                                     </div>
 
@@ -214,8 +220,6 @@
                             <!-- Profile Details End -->
 
 {% endblock %}
-
-
 
 
 

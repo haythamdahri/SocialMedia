@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import *
 
 # Register your models here.
+
 admin.site.register(DemandeAmi)
 admin.site.register(DemandeGroupe)
 admin.site.register(Conversation)
